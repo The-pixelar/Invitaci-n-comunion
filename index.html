@@ -42,7 +42,6 @@
             z-index: 1;
         }
 
-        /* Capa para las chispas celestiales */
         #sparkles-container {
             position: fixed;
             top: 0;
@@ -135,22 +134,29 @@
             background-color: var(--gold-accent);
             color: white;
             border-radius: 50px;
-            padding: 12px 30px;
-            font-size: 11px;
+            padding: 10px 25px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
+            border: 1px solid var(--gold-accent);
+            background: transparent;
+            color: var(--gold-accent);
+            transition: all 0.3s;
+        }
+        .btn-gold:hover {
+            background: var(--gold-accent);
+            color: white;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
+            background: white;
             border-radius: 30px;
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,0.8);
+            padding: 35px 25px;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
 
-        /* Estilo para la imagen de la copa */
         .chalice-icon {
             width: 80px;
             margin: 0 auto;
@@ -158,22 +164,41 @@
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
 
-        /* Estilos de los logos en el pie */
         .footer-logo {
-            height: 35px;
+            height: 28px;
             width: auto;
-            opacity: 0.6;
-            filter: grayscale(20%);
-            transition: opacity 0.3s;
+            opacity: 0.4;
+            filter: grayscale(100%);
+            transition: all 0.4s ease;
         }
         .footer-logo:hover {
-            opacity: 1;
+            opacity: 0.8;
+            filter: grayscale(0%);
+        }
+
+        .personal-logo {
+            height: 45px;
+            width: auto;
+            margin: 0 auto;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .icon-accent {
+            color: var(--gold-accent);
+        }
+
+        .professional-credits {
+            border-top: 1px solid rgba(176, 141, 87, 0.1);
+            padding-top: 40px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 320px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Contenedor de Efectos -->
     <div id="sparkles-container"></div>
 
     <div class="watercolor-canvas">
@@ -258,19 +283,56 @@
                 </div>
 
                 <div class="card text-center shadow-sm">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-10 h-10 icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18" />
+                            <path d="M19 21v-4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4" />
+                            <path d="M9 21v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4" />
+                            <path d="M12 2v2" />
+                            <path d="M12 7V5" />
+                            <path d="M10 7h4" />
+                            <path d="m12 7-9 5v9" />
+                            <path d="m12 7 9 5v9" />
+                        </svg>
+                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Ceremonia</h4>
                     <p class="font-bold text-gray-700 text-sm">Parroquia de Nuestra Señora de los Dolores</p>
-                    <p class="text-[11px] text-gray-500 mt-2">Aguascalientes, Ags.</p>
+                    <p class="text-[11px] text-gray-500 mt-2 italic">Av. Convención 1914 poniente,<br>Barrio de San Marcos</p>
+                    <p class="text-[#5a6e5a] font-bold text-xs mt-4 uppercase tracking-widest">1:00 PM</p>
                     <a href="https://maps.app.goo.gl/uXpX9Mv6kQjU8XvP7" target="_blank" class="mt-6 inline-block btn-gold">Ver Mapa</a>
                 </div>
 
                 <div class="card text-center shadow-sm">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-10 h-10 icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Recepción</h4>
                     <p class="font-bold text-gray-700 text-sm">Hotel Marriott Aguascalientes</p>
+                    <p class="text-[11px] text-gray-500 mt-2 italic">Blvd. a Zacatecas 402, Las Trojes</p>
                     <p class="text-[#5a6e5a] font-bold text-xs mt-4 uppercase tracking-widest">3:00 PM</p>
                     <a href="https://maps.app.goo.gl/S1S4fW3G8z9R9L6T6" target="_blank" class="mt-6 inline-block btn-gold">Ver Mapa</a>
                 </div>
             </div>
+
+            <!-- Regalo -->
+            <section class="w-full max-w-sm px-4 mb-16 reveal">
+                <div class="bg-white/40 border border-[#e5e0d5] rounded-[40px] p-8 text-center shadow-inner">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-8 h-8 icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                            <path d="m3.3 7 8.7 5 8.7-5" />
+                            <path d="M12 22V12" />
+                        </svg>
+                    </div>
+                    <p class="font-serif-elegant text-[10px] uppercase tracking-[0.3em] text-[#b08d57] mb-3">Lluvia de Sobres</p>
+                    <p class="text-[11px] text-gray-500 italic leading-relaxed">
+                        "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo, contaremos con una cajita en la recepción."
+                    </p>
+                </div>
+            </section>
 
             <!-- RSVP -->
             <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
@@ -305,45 +367,50 @@
                 </div>
             </section>
 
-            <!-- Sección de Colaboración y Logos -->
-            <section class="w-full max-w-sm mb-10 text-center reveal">
-                <div class="flex items-center justify-center gap-6 mb-4">
-                    <img src="imagen/copymax.png" alt="Copy Max" class="footer-logo">
-                    <div class="w-[1px] h-6 bg-stone-300"></div>
-                    <img src="imagen/pixelar.png" alt="PixelAR" class="footer-logo">
-                </div>
-                <div class="px-6">
-                    <p class="text-[9px] text-gray-400 uppercase tracking-widest leading-loose">
-                        Hecho en <span class="text-gray-600 font-semibold">Copy Max</span> en colaboración con <span class="text-gray-600 font-semibold">PixelAR</span><br>
-                        Diseñador Gráfico: <span class="italic">Alfredo Vázquez</span><br>
-                        Para el festejado: <span class="text-[#b08d57]">Daniel Santiago</span>
+            <!-- Sección de Colaboración y Logos (Pie de Página Profesional) -->
+            <section class="professional-credits reveal">
+                <div class="text-center space-y-6">
+                    <!-- Tu Logo Personal (Sustituye al nombre) -->
+                    <div class="space-y-3">
+                        <p class="text-[8px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Creative Design by</p>
+                        <img src="imagen/lógico.png" alt="Alfredo Vázquez Logo" class="personal-logo">
+                    </div>
+
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="h-[0.5px] w-8 bg-gray-200"></div>
+                        <span class="text-[10px] text-gray-300">✧</span>
+                        <div class="h-[0.5px] w-8 bg-gray-200"></div>
+                    </div>
+
+                    <!-- Logos Partner -->
+                    <div class="flex items-center justify-center gap-8 pb-4">
+                        <img src="imagen/copymax.png" alt="Copy Max" class="footer-logo">
+                        <img src="imagen/pixelar.png" alt="PixelAR" class="footer-logo">
+                    </div>
+
+                    <p class="text-[7px] uppercase tracking-[0.6em] text-gray-300 pt-2 border-t border-gray-100">
+                        Exclusivo para Daniel Santiago · 2026
                     </p>
                 </div>
             </section>
 
             <div class="botanical-footer"></div>
-            
-            <footer class="text-center pb-10 opacity-30">
-                <p class="font-serif-elegant text-[8px] tracking-[0.5em] text-gray-600 uppercase">
-                    Daniel Santiago Luévano Soto · 2026
-                </p>
-            </footer>
         </div>
     </div>
 
     <script>
         function createSparkles() {
             const container = document.getElementById('sparkles-container');
-            const sparkleCount = 20;
+            const sparkleCount = 15;
             for (let i = 0; i < sparkleCount; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
-                const size = Math.random() * 4 + 2;
+                const size = Math.random() * 3 + 2;
                 sparkle.style.width = `${size}px`;
                 sparkle.style.height = `${size}px`;
                 sparkle.style.left = `${Math.random() * 100}%`;
                 sparkle.style.top = `${Math.random() * 100}%`;
-                const duration = Math.random() * 3 + 2;
+                const duration = Math.random() * 4 + 3;
                 sparkle.style.setProperty('--duration', `${duration}s`);
                 sparkle.style.animationDelay = `${Math.random() * 5}s`;
                 container.appendChild(sparkle);
@@ -370,39 +437,4 @@
             const nombre = document.getElementById('guestName').value.trim();
             const cantidad = document.getElementById('guestCount').value;
             if (!nombre) {
-                document.getElementById('guestName').style.border = "1px solid #b08d57";
-                return;
-            }
-            finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos para celebrar con Daniel Santiago!`;
-            document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
-            document.getElementById('step-form').classList.add('hidden');
-            document.getElementById('step-preview').classList.remove('hidden');
-        }
-
-        function sendToWhatsApp() {
-            window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(finalMessage)}`, '_blank');
-        }
-
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-
-        window.addEventListener("scroll", reveal);
-        window.onload = function() {
-            reveal();
-            createSparkles();
-            updateCountdown();
-        };
-    </script>
-</body>
-</html>
-
-```
-    
+        
