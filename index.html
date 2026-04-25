@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -30,7 +31,6 @@
         .font-cursive { font-family: 'Great Vibes', cursive; }
         .font-classic { font-family: 'Playfair Display', serif; }
         
-        /* Textura de papel acuarela */
         .watercolor-canvas {
             background-color: var(--cream-bg);
             background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
@@ -65,7 +65,6 @@
             100% { opacity: 0; transform: scale(0.3) translateY(-40px); }
         }
 
-        /* Marcos botánicos */
         .botanical-header {
             width: 100%;
             height: 180px;
@@ -105,24 +104,10 @@
             50% { transform: translateY(-10px); }
         }
 
-        .gold-text {
-            color: var(--gold-accent);
-            text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.05);
-        }
-
-        .countdown-box {
-            background: white;
-            border: 1px solid rgba(176, 141, 87, 0.15);
-            border-radius: 12px;
-            min-width: 60px;
-            padding: 8px 4px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
-
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s ease-out;
+            transform: translateY(30px);
+            transition: all 1.2s cubic-bezier(0.17, 0.55, 0.55, 1);
         }
         .reveal.active {
             opacity: 1;
@@ -130,17 +115,15 @@
         }
 
         .btn-gold {
-            background-color: var(--gold-accent);
-            color: white;
+            background-color: transparent;
+            color: var(--gold-accent);
+            border: 1px solid var(--gold-accent);
             border-radius: 50px;
             padding: 10px 25px;
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
-            border: 1px solid var(--gold-accent);
-            background: transparent;
-            color: var(--gold-accent);
             transition: all 0.3s;
         }
         .btn-gold:hover {
@@ -156,43 +139,36 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
 
-        .chalice-icon {
-            width: 80px;
-            margin: 0 auto;
-            display: block;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-        }
-
-        .footer-logo {
-            height: 28px;
-            width: auto;
-            opacity: 0.4;
+        /* Estilo unificado para logos de pie de página */
+        .footer-logo-container {
             filter: grayscale(100%);
-            transition: all 0.4s ease;
+            opacity: 0.45;
+            transition: all 0.5s ease;
         }
-        .footer-logo:hover {
-            opacity: 0.8;
+        .footer-logo-container:hover {
             filter: grayscale(0%);
+            opacity: 0.9;
         }
 
-        .personal-logo {
-            height: 45px;
+        .logo-alfredo {
+            height: 48px;
             width: auto;
-            margin: 0 auto;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
         }
-
-        .icon-accent {
-            color: var(--gold-accent);
+        .logo-copymax {
+            height: 24px;
+            width: auto;
+        }
+        .logo-pixelar {
+            height: 38px; /* Pixelar necesita más altura para ser legible */
+            width: auto;
         }
 
         .professional-credits {
-            border-top: 1px solid rgba(176, 141, 87, 0.1);
-            padding-top: 40px;
-            margin-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 50px;
+            margin-top: 40px;
             width: 100%;
-            max-width: 320px;
+            max-width: 340px;
         }
     </style>
 </head>
@@ -206,10 +182,9 @@
         <div class="relative z-10 flex flex-col items-center px-6">
             
             <!-- Título Principal -->
-            <div class="text-center mt-[-40px] mb-8 reveal active">
-                <img src="imagen/copa.png" alt="Cáliz" class="chalice-icon mb-4">
-                
-                <p class="font-cursive text-4xl gold-text mb-2">Mi Primera</p>
+            <div class="text-center mt-[-40px] mb-8">
+                <img src="imagen/copa.png" alt="Cáliz" class="w-20 mx-auto mb-4 drop-shadow-md">
+                <p class="font-cursive text-4xl text-[#b08d57] mb-2">Mi Primera</p>
                 <p class="font-serif-elegant text-2xl tracking-[0.2em] text-gray-700 uppercase">Comunión</p>
                 
                 <div class="flex items-center justify-center gap-4 my-4">
@@ -220,14 +195,12 @@
             </div>
 
             <!-- ILUSTRACIÓN DEL NIÑO -->
-            <div class="main-illustration reveal active">
-                <img src="imagen/rezando.jpg" 
-                     alt="Daniel Santiago Rezando" 
-                     class="w-full h-full object-cover">
+            <div class="main-illustration">
+                <img src="imagen/rezando.jpg" alt="Daniel Santiago" class="w-full h-full object-cover">
             </div>
 
             <!-- Nombre -->
-            <div class="text-center mb-8 reveal">
+            <div class="text-center mb-8 reveal active">
                 <h1 class="font-cursive text-6xl text-gray-800">Daniel Santiago</h1>
                 <p class="font-serif-elegant text-sm tracking-[0.4em] text-gray-500 mt-2 uppercase">Luévano Soto</p>
             </div>
@@ -257,14 +230,6 @@
                 </div>
             </div>
 
-            <!-- Invitación Texto -->
-            <section class="max-w-xs text-center mb-16 reveal">
-                <p class="font-classic italic text-gray-500 text-sm leading-relaxed px-4">
-                    "Que Jesús te acompañe siempre en tu camino, Daniel Santiago."
-                </p>
-                <div class="w-12 h-[1px] bg-[#b08d57]/20 mx-auto mt-6"></div>
-            </section>
-
             <!-- Datos del Evento -->
             <div class="w-full max-w-sm space-y-8 mb-16 reveal">
                 <div class="text-center py-8 border-y border-[#e5e0d5]">
@@ -282,31 +247,19 @@
                 </div>
 
                 <div class="card text-center shadow-sm">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-10 h-10 icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 21h18" />
-                            <path d="M19 21v-4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4" />
-                            <path d="M9 21v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4" />
-                            <path d="M12 2v2" />
-                            <path d="M12 7V5" />
-                            <path d="M10 7h4" />
-                            <path d="m12 7-9 5v9" />
-                            <path d="m12 7 9 5v9" />
-                        </svg>
+                    <div class="flex justify-center mb-4 text-[#b08d57]">
+                        <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18" /><path d="M19 21v-4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4" /><path d="M9 21v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4" /><path d="M12 2v2" /><path d="M12 7V5" /><path d="M10 7h4" /><path d="m12 7-9 5v9" /><path d="m12 7 9 5v9" /></svg>
                     </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Ceremonia</h4>
                     <p class="font-bold text-gray-700 text-sm">Parroquia de Nuestra Señora de los Dolores</p>
-                    <p class="text-[11px] text-gray-500 mt-2 italic">Av. Convención 1914 poniente,<br>Barrio de San Marcos</p>
+                    <p class="text-[11px] text-gray-500 mt-2 italic">Av. Convención 1914 poniente, Barrio de San Marcos</p>
                     <p class="text-[#5a6e5a] font-bold text-xs mt-4 uppercase tracking-widest">1:00 PM</p>
                     <a href="https://maps.app.goo.gl/uXpX9Mv6kQjU8XvP7" target="_blank" class="mt-6 inline-block btn-gold">Ver Mapa</a>
                 </div>
 
                 <div class="card text-center shadow-sm">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-10 h-10 icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                            <polyline points="9 22 9 12 15 12 15 22" />
-                        </svg>
+                    <div class="flex justify-center mb-4 text-[#b08d57]">
+                        <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
                     </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Recepción</h4>
                     <p class="font-bold text-gray-700 text-sm">Hotel Marriott Aguascalientes</p>
@@ -316,23 +269,6 @@
                 </div>
             </div>
 
-            <!-- Regalo -->
-            <section class="w-full max-w-sm px-4 mb-16 reveal">
-                <div class="bg-white/40 border border-[#e5e0d5] rounded-[40px] p-8 text-center shadow-inner">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-8 h-8 icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
-                            <path d="m3.3 7 8.7 5 8.7-5" />
-                            <path d="M12 22V12" />
-                        </svg>
-                    </div>
-                    <p class="font-serif-elegant text-[10px] uppercase tracking-[0.3em] text-[#b08d57] mb-3">Lluvia de Sobres</p>
-                    <p class="text-[11px] text-gray-500 italic leading-relaxed">
-                        "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo, contaremos con una cajita en la recepción."
-                    </p>
-                </div>
-            </section>
-
             <!-- RSVP -->
             <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
                 <div class="bg-white rounded-[40px] p-10 shadow-2xl shadow-stone-200/50 border border-stone-100">
@@ -340,54 +276,44 @@
                         <h3 class="text-2xl font-serif-elegant text-gray-800">Confirmación</h3>
                         <p class="text-[9px] uppercase tracking-[0.3em] text-[#5a6e5a] font-bold mt-2">Favor de confirmar antes del 23 de Mayo</p>
                     </div>
-
                     <div id="step-form" class="space-y-4">
                         <input type="text" id="guestName" class="w-full p-4 bg-stone-50 border-none rounded-2xl text-sm focus:ring-1 focus:ring-[#b08d57] outline-none" placeholder="Nombre o Familia">
                         <select id="guestCount" class="w-full p-4 bg-stone-50 border-none rounded-2xl text-sm outline-none">
-                            <option value="1">1 Persona</option>
-                            <option value="2">2 Personas</option>
-                            <option value="3">3 Personas</option>
-                            <option value="4">4 Personas</option>
-                            <option value="5">5 Personas</option>
+                            <option value="1">1 Persona</option><option value="2">2 Personas</option><option value="3">3 Personas</option><option value="4">4 Personas</option><option value="5">5 Personas</option>
                         </select>
-                        <button onclick="previewConfirmation()" class="w-full bg-[#5a6e5a] text-white font-bold py-4 rounded-2xl uppercase text-[10px] tracking-widest mt-2 shadow-lg shadow-green-900/10 transition-all active:scale-95">
-                            Confirmar Asistencia
-                        </button>
+                        <button onclick="previewConfirmation()" class="w-full bg-[#5a6e5a] text-white font-bold py-4 rounded-2xl uppercase text-[10px] tracking-widest mt-2 transition-all active:scale-95">Confirmar Asistencia</button>
                     </div>
-
                     <div id="step-preview" class="hidden space-y-6">
-                        <div class="bg-stone-50 p-6 rounded-3xl">
-                            <p id="previewText" class="text-[12px] text-gray-600 leading-relaxed italic text-center"></p>
-                        </div>
-                        <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-4 rounded-2xl uppercase text-xs tracking-widest flex items-center justify-center gap-2">
-                            Enviar por WhatsApp
-                        </button>
+                        <div class="bg-stone-50 p-6 rounded-3xl"><p id="previewText" class="text-[12px] text-gray-600 italic text-center"></p></div>
+                        <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-4 rounded-2xl uppercase text-xs tracking-widest flex items-center justify-center gap-2">Enviar WhatsApp</button>
                     </div>
                 </div>
             </section>
 
-            <!-- Sección de Colaboración y Logos (Pie de Página Profesional) -->
+            <!-- PIE DE PÁGINA PROFESIONAL -->
             <section class="professional-credits reveal">
-                <div class="text-center space-y-6">
-                    <!-- Tu Logo Personal (Sustituye al nombre) -->
-                    <div class="space-y-3">
+                <div class="text-center space-y-8 footer-logo-container">
+                    <!-- Firma Personal Alfredo Vázquez -->
+                    <div class="space-y-2">
                         <p class="text-[8px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Creative Design by</p>
-                        <img src="imagen/lógico.png" alt="Alfredo Vázquez Logo" class="personal-logo">
+                        <img src="imagen/lógico.png" alt="Alfredo Vázquez Logo" class="logo-alfredo">
                     </div>
 
-                    <div class="flex items-center justify-center gap-3">
-                        <div class="h-[0.5px] w-8 bg-gray-200"></div>
+                    <!-- Divisor sutil -->
+                    <div class="flex items-center justify-center gap-4">
+                        <div class="h-[0.5px] w-10 bg-gray-200"></div>
                         <span class="text-[10px] text-gray-300">✧</span>
-                        <div class="h-[0.5px] w-8 bg-gray-200"></div>
+                        <div class="h-[0.5px] w-10 bg-gray-200"></div>
                     </div>
 
-                    <!-- Logos Partner -->
-                    <div class="flex items-center justify-center gap-8 pb-4">
-                        <img src="imagen/copymax.png" alt="Copy Max" class="footer-logo">
-                        <img src="imagen/pixelar.png" alt="PixelAR" class="footer-logo">
+                    <!-- Logos de Colaboración Proporcionales -->
+                    <div class="flex items-center justify-center gap-10">
+                        <img src="imagen/copymax.png" alt="Copy Max" class="logo-copymax">
+                        <img src="imagen/pixelar.png" alt="PixelAR" class="logo-pixelar">
                     </div>
 
-                    <p class="text-[7px] uppercase tracking-[0.6em] text-gray-300 pt-2 border-t border-gray-100">
+                    <!-- Dedicatoria final -->
+                    <p class="text-[7px] uppercase tracking-[0.6em] text-gray-300 pt-6 border-t border-gray-50">
                         Exclusivo para Daniel Santiago · 2026
                     </p>
                 </div>
@@ -400,8 +326,7 @@
     <script>
         function createSparkles() {
             const container = document.getElementById('sparkles-container');
-            const sparkleCount = 15;
-            for (let i = 0; i < sparkleCount; i++) {
+            for (let i = 0; i < 15; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
                 const size = Math.random() * 3 + 2;
@@ -409,8 +334,7 @@
                 sparkle.style.height = `${size}px`;
                 sparkle.style.left = `${Math.random() * 100}%`;
                 sparkle.style.top = `${Math.random() * 100}%`;
-                const duration = Math.random() * 4 + 3;
-                sparkle.style.setProperty('--duration', `${duration}s`);
+                sparkle.style.setProperty('--duration', `${Math.random() * 4 + 3}s`);
                 sparkle.style.animationDelay = `${Math.random() * 5}s`;
                 container.appendChild(sparkle);
             }
@@ -430,23 +354,19 @@
 
         setInterval(updateCountdown, 1000);
 
-        const telefono = "5214498040411";
-        let finalMessage = "";
         function previewConfirmation() {
             const nombre = document.getElementById('guestName').value.trim();
             const cantidad = document.getElementById('guestCount').value;
-            if (!nombre) {
-                document.getElementById('guestName').style.border = "1px solid #b08d57";
-                return;
-            }
-            finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos para celebrar con Daniel Santiago!`;
+            if (!nombre) { document.getElementById('guestName').style.border = "1px solid #b08d57"; return; }
+            const finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos para celebrar con Daniel Santiago!`;
             document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
             document.getElementById('step-form').classList.add('hidden');
             document.getElementById('step-preview').classList.remove('hidden');
+            window.lastMessage = finalMessage;
         }
 
         function sendToWhatsApp() {
-            window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(finalMessage)}`, '_blank');
+            window.open(`https://wa.me/5214498040411?text=${encodeURIComponent(window.lastMessage)}`, '_blank');
         }
 
         function reveal() {
@@ -454,9 +374,7 @@
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    reveals[i].classList.add("active");
-                }
+                if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
             }
         }
 
@@ -469,4 +387,6 @@
     </script>
 </body>
 </html>
+
+```
 
