@@ -25,6 +25,7 @@
             font-family: 'Montserrat', sans-serif;
             color: #4a4a4a;
             -webkit-font-smoothing: antialiased;
+            font-size: 16px; /* Aumento de base */
         }
 
         .font-serif-elegant { font-family: 'Cinzel', serif; }
@@ -89,10 +90,10 @@
 
         .main-illustration {
             width: 85%;
-            max-width: 300px;
-            border-radius: 150px 150px 20px 20px;
+            max-width: 320px;
+            border-radius: 160px 160px 20px 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            border: 8px solid white;
+            border: 10px solid white;
             margin: -40px auto 30px;
             overflow: hidden;
             background: #fff;
@@ -117,13 +118,13 @@
         .btn-gold {
             background-color: transparent;
             color: var(--gold-accent);
-            border: 1px solid var(--gold-accent);
+            border: 1.5px solid var(--gold-accent);
             border-radius: 50px;
-            padding: 10px 25px;
-            font-size: 10px;
+            padding: 12px 30px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-weight: 600;
+            font-weight: 700;
             transition: all 0.3s;
         }
         .btn-gold:hover {
@@ -134,15 +135,15 @@
         .card {
             background: white;
             border-radius: 30px;
-            padding: 35px 25px;
+            padding: 40px 30px;
             border: 1px solid rgba(0,0,0,0.03);
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
 
-        /* Estilo unificado para logos de pie de página */
+        /* Logos proporcionales (aprox 2cm de ancho) */
         .footer-logo-container {
             filter: grayscale(100%);
-            opacity: 0.45;
+            opacity: 0.4;
             transition: all 0.5s ease;
         }
         .footer-logo-container:hover {
@@ -150,25 +151,25 @@
             opacity: 0.9;
         }
 
-        .logo-alfredo {
-            height: 48px;
-            width: auto;
-        }
-        .logo-copymax {
-            height: 24px;
-            width: auto;
-        }
-        .logo-pixelar {
-            height: 38px; /* Pixelar necesita más altura para ser legible */
-            width: auto;
+        .logo-alfredo, .logo-pixelar, .logo-copymax {
+            width: 76px; /* Aproximadamente 2cm en pantalla */
+            height: auto;
+            margin: 0 auto;
+            display: block;
         }
 
         .professional-credits {
             border-top: 1px solid rgba(0,0,0,0.05);
-            padding-top: 50px;
+            padding-top: 60px;
             margin-top: 40px;
             width: 100%;
-            max-width: 340px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .icon-accent {
+            color: var(--gold-accent);
         }
     </style>
 </head>
@@ -183,14 +184,14 @@
             
             <!-- Título Principal -->
             <div class="text-center mt-[-40px] mb-8">
-                <img src="imagen/copa.png" alt="Cáliz" class="w-20 mx-auto mb-4 drop-shadow-md">
-                <p class="font-cursive text-4xl text-[#b08d57] mb-2">Mi Primera</p>
-                <p class="font-serif-elegant text-2xl tracking-[0.2em] text-gray-700 uppercase">Comunión</p>
+                <img src="imagen/copa.png" alt="Cáliz" class="w-24 mx-auto mb-4 drop-shadow-md">
+                <p class="font-cursive text-5xl text-[#b08d57] mb-2">Mi Primera</p>
+                <p class="font-serif-elegant text-3xl tracking-[0.2em] text-gray-700 uppercase">Comunión</p>
                 
-                <div class="flex items-center justify-center gap-4 my-4">
-                    <div class="h-[1px] w-12 bg-[#b08d57]/30"></div>
-                    <span class="text-[#b08d57] text-xs">🕊️</span>
-                    <div class="h-[1px] w-12 bg-[#b08d57]/30"></div>
+                <div class="flex items-center justify-center gap-4 my-6">
+                    <div class="h-[1.5px] w-14 bg-[#b08d57]/30"></div>
+                    <span class="text-[#b08d57] text-sm">🕊️</span>
+                    <div class="h-[1.5px] w-14 bg-[#b08d57]/30"></div>
                 </div>
             </div>
 
@@ -200,120 +201,156 @@
             </div>
 
             <!-- Nombre -->
-            <div class="text-center mb-8 reveal active">
-                <h1 class="font-cursive text-6xl text-gray-800">Daniel Santiago</h1>
-                <p class="font-serif-elegant text-sm tracking-[0.4em] text-gray-500 mt-2 uppercase">Luévano Soto</p>
+            <div class="text-center mb-10 reveal active">
+                <h1 class="font-cursive text-7xl text-gray-800">Daniel Santiago</h1>
+                <p class="font-serif-elegant text-lg tracking-[0.4em] text-gray-400 mt-3 uppercase">Luévano Soto</p>
             </div>
 
             <!-- CUENTA REGRESIVA -->
-            <div class="w-full max-w-sm mb-12 reveal">
-                <div class="text-center mb-4">
-                    <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-[#b08d57]">Falta muy poco:</p>
+            <div class="w-full max-w-sm mb-10 reveal">
+                <div class="text-center mb-6">
+                    <p class="text-[12px] font-bold uppercase tracking-[0.3em] text-[#b08d57]">Falta muy poco:</p>
                 </div>
-                <div class="flex justify-center gap-3">
-                    <div class="countdown-box text-center">
-                        <span id="days" class="block font-serif-elegant text-xl text-gray-800">00</span>
-                        <span class="text-[8px] uppercase text-gray-400">Días</span>
+                <div class="flex justify-center gap-4">
+                    <div class="countdown-box text-center min-w-[70px]">
+                        <span id="days" class="block font-serif-elegant text-2xl text-gray-800">00</span>
+                        <span class="text-[10px] uppercase text-gray-400">Días</span>
                     </div>
-                    <div class="countdown-box text-center">
-                        <span id="hours" class="block font-serif-elegant text-xl text-gray-800">00</span>
-                        <span class="text-[8px] uppercase text-gray-400">Horas</span>
+                    <div class="countdown-box text-center min-w-[70px]">
+                        <span id="hours" class="block font-serif-elegant text-2xl text-gray-800">00</span>
+                        <span class="text-[10px] uppercase text-gray-400">Horas</span>
                     </div>
-                    <div class="countdown-box text-center">
-                        <span id="minutes" class="block font-serif-elegant text-xl text-gray-800">00</span>
-                        <span class="text-[8px] uppercase text-gray-400">Min</span>
+                    <div class="countdown-box text-center min-w-[70px]">
+                        <span id="minutes" class="block font-serif-elegant text-2xl text-gray-800">00</span>
+                        <span class="text-[10px] uppercase text-gray-400">Min</span>
                     </div>
-                    <div class="countdown-box text-center">
-                        <span id="seconds" class="block font-serif-elegant text-xl text-gray-800">00</span>
-                        <span class="text-[8px] uppercase text-gray-400">Seg</span>
+                    <div class="countdown-box text-center min-w-[70px]">
+                        <span id="seconds" class="block font-serif-elegant text-2xl text-gray-800">00</span>
+                        <span class="text-[10px] uppercase text-gray-400">Seg</span>
                     </div>
                 </div>
             </div>
+
+            <!-- Frase inspiracional -->
+            <section class="max-w-xs text-center mb-16 reveal">
+                <p class="font-classic italic text-gray-600 text-lg leading-relaxed px-2">
+                    "Que Jesús te acompañe siempre en tu camino, Daniel Santiago."
+                </p>
+                <div class="w-16 h-[1px] bg-[#b08d57]/30 mx-auto mt-8"></div>
+            </section>
 
             <!-- Datos del Evento -->
-            <div class="w-full max-w-sm space-y-8 mb-16 reveal">
-                <div class="text-center py-8 border-y border-[#e5e0d5]">
+            <div class="w-full max-w-sm space-y-10 mb-16 reveal">
+                <div class="text-center py-10 border-y border-[#e5e0d5]">
                     <div class="flex justify-around items-center">
                         <div class="text-right">
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-[#b08d57]">Junio</p>
-                            <p class="text-xs text-gray-400 uppercase">Sábado</p>
+                            <p class="text-[12px] font-bold uppercase tracking-widest text-[#b08d57]">Junio</p>
+                            <p class="text-sm text-gray-400 uppercase">Sábado</p>
                         </div>
-                        <div class="text-5xl font-serif-elegant text-gray-800">06</div>
+                        <div class="text-6xl font-serif-elegant text-gray-800">06</div>
                         <div class="text-left">
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-[#b08d57]">2026</p>
-                            <p class="text-xs text-gray-400 uppercase">1:00 PM</p>
+                            <p class="text-[12px] font-bold uppercase tracking-widest text-[#b08d57]">2026</p>
+                            <p class="text-sm text-gray-400 uppercase">1:00 PM</p>
                         </div>
                     </div>
                 </div>
 
+                <!-- Ceremonia -->
                 <div class="card text-center shadow-sm">
-                    <div class="flex justify-center mb-4 text-[#b08d57]">
-                        <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18" /><path d="M19 21v-4a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v4" /><path d="M9 21v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4" /><path d="M12 2v2" /><path d="M12 7V5" /><path d="M10 7h4" /><path d="m12 7-9 5v9" /><path d="m12 7 9 5v9" /></svg>
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4M10 4h4" />
+                            <path d="M4 22h16" />
+                            <path d="M12 6L4 12v10h16V12L12 6z" />
+                            <path d="M10 22v-4a2 2 0 0 1 4 0v4" />
+                        </svg>
                     </div>
-                    <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Ceremonia</h4>
-                    <p class="font-bold text-gray-700 text-sm">Parroquia de Nuestra Señora de los Dolores</p>
-                    <p class="text-[11px] text-gray-500 mt-2 italic">Av. Convención 1914 poniente, Barrio de San Marcos</p>
-                    <p class="text-[#5a6e5a] font-bold text-xs mt-4 uppercase tracking-widest">1:00 PM</p>
-                    <a href="https://maps.app.goo.gl/uXpX9Mv6kQjU8XvP7" target="_blank" class="mt-6 inline-block btn-gold">Ver Mapa</a>
+                    <h4 class="font-serif-elegant text-[#b08d57] text-sm tracking-widest mb-4 uppercase">La Ceremonia</h4>
+                    <p class="font-bold text-gray-700 text-base">Parroquia de Nuestra Señora de los Dolores</p>
+                    <p class="text-[13px] text-gray-500 mt-3 italic leading-relaxed">Av. Convención 1914 poniente,<br>Barrio de San Marcos</p>
+                    <p class="text-[#5a6e5a] font-bold text-sm mt-5 uppercase tracking-widest">1:00 PM</p>
+                    <a href="https://maps.app.goo.gl/uXpX9Mv6kQjU8XvP7" target="_blank" class="mt-8 inline-block btn-gold">Ver Mapa</a>
                 </div>
 
+                <!-- Recepción -->
                 <div class="card text-center shadow-sm">
-                    <div class="flex justify-center mb-4 text-[#b08d57]">
-                        <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
                     </div>
-                    <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Recepción</h4>
-                    <p class="font-bold text-gray-700 text-sm">Hotel Marriott Aguascalientes</p>
-                    <p class="text-[11px] text-gray-500 mt-2 italic">Blvd. a Zacatecas 402, Las Trojes</p>
-                    <p class="text-[#5a6e5a] font-bold text-xs mt-4 uppercase tracking-widest">3:00 PM</p>
-                    <a href="https://maps.app.goo.gl/S1S4fW3G8z9R9L6T6" target="_blank" class="mt-6 inline-block btn-gold">Ver Mapa</a>
+                    <h4 class="font-serif-elegant text-[#b08d57] text-sm tracking-widest mb-4 uppercase">La Recepción</h4>
+                    <p class="font-bold text-gray-700 text-base">Hotel Marriott Aguascalientes</p>
+                    <p class="text-[13px] text-gray-500 mt-3 italic leading-relaxed">Blvd. a Zacatecas 402, Las Trojes</p>
+                    <p class="text-[#5a6e5a] font-bold text-sm mt-5 uppercase tracking-widest">3:00 PM</p>
+                    <a href="https://maps.app.goo.gl/S1S4fW3G8z9R9L6T6" target="_blank" class="mt-8 inline-block btn-gold">Ver Mapa</a>
                 </div>
             </div>
+
+            <!-- Sugerencia de Regalos -->
+            <section class="w-full max-w-sm px-4 mb-16 reveal">
+                <div class="bg-white/40 border border-[#e5e0d5] rounded-[40px] p-10 text-center shadow-inner">
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 12v10H4V12" />
+                            <path d="M2 7h20v5H2z" />
+                            <path d="M12 22V7" />
+                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                        </svg>
+                    </div>
+                    <p class="font-serif-elegant text-[12px] uppercase tracking-[0.3em] text-[#b08d57] mb-4">Sugerencia de Regalos</p>
+                    <p class="text-[13px] text-gray-600 italic leading-relaxed px-2">
+                        "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo, contaremos con una cajita en la recepción."
+                    </p>
+                </div>
+            </section>
 
             <!-- RSVP -->
             <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
-                <div class="bg-white rounded-[40px] p-10 shadow-2xl shadow-stone-200/50 border border-stone-100">
-                    <div class="text-center mb-8">
-                        <h3 class="text-2xl font-serif-elegant text-gray-800">Confirmación</h3>
-                        <p class="text-[9px] uppercase tracking-[0.3em] text-[#5a6e5a] font-bold mt-2">Favor de confirmar antes del 23 de Mayo</p>
+                <div class="bg-white rounded-[40px] p-12 shadow-2xl shadow-stone-200/50 border border-stone-100">
+                    <div class="text-center mb-10">
+                        <h3 class="text-3xl font-serif-elegant text-gray-800">Confirmación</h3>
+                        <p class="text-[10px] uppercase tracking-[0.3em] text-[#5a6e5a] font-bold mt-3">Favor de confirmar antes del 23 de Mayo</p>
                     </div>
-                    <div id="step-form" class="space-y-4">
-                        <input type="text" id="guestName" class="w-full p-4 bg-stone-50 border-none rounded-2xl text-sm focus:ring-1 focus:ring-[#b08d57] outline-none" placeholder="Nombre o Familia">
-                        <select id="guestCount" class="w-full p-4 bg-stone-50 border-none rounded-2xl text-sm outline-none">
+                    <div id="step-form" class="space-y-6">
+                        <input type="text" id="guestName" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-base focus:ring-1 focus:ring-[#b08d57] outline-none" placeholder="Nombre o Familia">
+                        <select id="guestCount" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-base outline-none">
                             <option value="1">1 Persona</option><option value="2">2 Personas</option><option value="3">3 Personas</option><option value="4">4 Personas</option><option value="5">5 Personas</option>
                         </select>
-                        <button onclick="previewConfirmation()" class="w-full bg-[#5a6e5a] text-white font-bold py-4 rounded-2xl uppercase text-[10px] tracking-widest mt-2 transition-all active:scale-95">Confirmar Asistencia</button>
+                        <button onclick="previewConfirmation()" class="w-full bg-[#5a6e5a] text-white font-bold py-5 rounded-2xl uppercase text-[12px] tracking-widest mt-4 transition-all active:scale-95 shadow-lg shadow-green-900/10">Confirmar Asistencia</button>
                     </div>
-                    <div id="step-preview" class="hidden space-y-6">
-                        <div class="bg-stone-50 p-6 rounded-3xl"><p id="previewText" class="text-[12px] text-gray-600 italic text-center"></p></div>
-                        <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-4 rounded-2xl uppercase text-xs tracking-widest flex items-center justify-center gap-2">Enviar WhatsApp</button>
+                    <div id="step-preview" class="hidden space-y-8">
+                        <div class="bg-stone-50 p-8 rounded-3xl"><p id="previewText" class="text-base text-gray-600 italic text-center leading-relaxed"></p></div>
+                        <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-2xl uppercase text-[12px] tracking-widest flex items-center justify-center gap-3">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.29-4.171c1.589.945 3.554 1.443 5.548 1.444 5.448 0 9.879-4.43 9.882-9.879.001-2.638-1.03-5.118-2.902-6.991-1.872-1.873-4.353-2.904-6.992-2.904-5.448 0-9.879 4.432-9.882 9.881-.001 2.038.536 4.021 1.554 5.761l-1.016 3.71 3.81-.998zm11.488-6.505c-.312-.156-1.848-.912-2.134-1.017-.286-.104-.494-.156-.701.156-.207.312-.804 1.017-.986 1.222-.182.205-.364.234-.676.078-.312-.156-1.316-.484-2.508-1.548-.928-.827-1.554-1.849-1.735-2.16-.182-.312-.019-.481.137-.636.14-.139.312-.364.468-.546.156-.182.208-.312.312-.52.104-.208.052-.39-.026-.546-.078-.156-.701-1.691-.961-2.313-.253-.607-.511-.525-.701-.535-.181-.01-.389-.011-.597-.011s-.546.078-.832.39c-.286.312-1.092 1.067-1.092 2.601 0 1.534 1.118 3.018 1.274 3.226.156.208 2.2 3.359 5.331 4.71.745.322 1.327.514 1.78.658.749.237 1.43.204 1.968.124.6-.09 1.847-.755 2.108-1.485.26-.73.26-1.353.182-1.485-.077-.13-.285-.208-.597-.364z"/></svg>
+                            Enviar WhatsApp
+                        </button>
                     </div>
                 </div>
             </section>
 
-            <!-- PIE DE PÁGINA PROFESIONAL -->
+            <!-- PIE DE PÁGINA PROFESIONAL - ALINEACIÓN VERTICAL -->
             <section class="professional-credits reveal">
-                <div class="text-center space-y-8 footer-logo-container">
-                    <!-- Firma Personal Alfredo Vázquez -->
-                    <div class="space-y-2">
-                        <p class="text-[8px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Creative Design by</p>
+                <div class="text-center flex flex-col items-center gap-12 footer-logo-container">
+                    
+                    <!-- 1. Firma logo (Alfredo) -->
+                    <div class="flex flex-col gap-4">
+                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Creative Design</p>
                         <img src="imagen/lógico.png" alt="Alfredo Vázquez Logo" class="logo-alfredo">
                     </div>
 
-                    <!-- Divisor sutil -->
-                    <div class="flex items-center justify-center gap-4">
-                        <div class="h-[0.5px] w-10 bg-gray-200"></div>
-                        <span class="text-[10px] text-gray-300">✧</span>
-                        <div class="h-[0.5px] w-10 bg-gray-200"></div>
-                    </div>
-
-                    <!-- Logos de Colaboración Proporcionales -->
-                    <div class="flex items-center justify-center gap-10">
-                        <img src="imagen/copymax.png" alt="Copy Max" class="logo-copymax">
+                    <!-- 2. Pixelar -->
+                    <div class="flex flex-col gap-4">
+                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Digital Studio</p>
                         <img src="imagen/pixelar.png" alt="PixelAR" class="logo-pixelar">
                     </div>
 
-                    <!-- Dedicatoria final -->
-                    <p class="text-[7px] uppercase tracking-[0.6em] text-gray-300 pt-6 border-t border-gray-50">
+                    <!-- 3. Copy Max -->
+                    <div class="flex flex-col gap-4">
+                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Printing Partner</p>
+                        <img src="imagen/copymax.png" alt="Copy Max" class="logo-copymax">
+                    </div>
+
+                    <p class="text-[8px] uppercase tracking-[0.6em] text-gray-300 pt-8 border-t border-gray-100 w-full">
                         Exclusivo para Daniel Santiago · 2026
                     </p>
                 </div>
@@ -326,10 +363,10 @@
     <script>
         function createSparkles() {
             const container = document.getElementById('sparkles-container');
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 20; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
-                const size = Math.random() * 3 + 2;
+                const size = Math.random() * 4 + 2;
                 sparkle.style.width = `${size}px`;
                 sparkle.style.height = `${size}px`;
                 sparkle.style.left = `${Math.random() * 100}%`;
@@ -346,10 +383,16 @@
             const gap = targetDate - now;
             const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
             const d = Math.floor(gap / day), h = Math.floor((gap % day) / hour), m = Math.floor((gap % hour) / minute), s = Math.floor((gap % minute) / second);
-            document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-            document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-            document.getElementById('minutes').innerText = m < 10 ? '0'+m : m;
-            document.getElementById('seconds').innerText = s < 10 ? '0'+s : s;
+            
+            const dEl = document.getElementById('days');
+            const hEl = document.getElementById('hours');
+            const mEl = document.getElementById('minutes');
+            const sEl = document.getElementById('seconds');
+            
+            if(dEl) dEl.innerText = d < 10 ? '0'+d : d;
+            if(hEl) hEl.innerText = h < 10 ? '0'+h : h;
+            if(mEl) mEl.innerText = m < 10 ? '0'+m : m;
+            if(sEl) sEl.innerText = s < 10 ? '0'+s : s;
         }
 
         setInterval(updateCountdown, 1000);
@@ -357,7 +400,7 @@
         function previewConfirmation() {
             const nombre = document.getElementById('guestName').value.trim();
             const cantidad = document.getElementById('guestCount').value;
-            if (!nombre) { document.getElementById('guestName').style.border = "1px solid #b08d57"; return; }
+            if (!nombre) { document.getElementById('guestName').style.border = "1.5px solid #b08d57"; return; }
             const finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos para celebrar con Daniel Santiago!`;
             document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
             document.getElementById('step-form').classList.add('hidden');
@@ -389,4 +432,3 @@
 </html>
 
 ```
-
