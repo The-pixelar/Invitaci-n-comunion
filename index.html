@@ -157,6 +157,18 @@
             display: block;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
+
+        /* Estilos de los logos en el pie */
+        .footer-logo {
+            height: 35px;
+            width: auto;
+            opacity: 0.6;
+            filter: grayscale(20%);
+            transition: opacity 0.3s;
+        }
+        .footer-logo:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -171,7 +183,6 @@
             
             <!-- Título Principal -->
             <div class="text-center mt-[-40px] mb-8 reveal active">
-                <!-- Icono de la Copa desde tu carpeta de imágenes -->
                 <img src="imagen/copa.png" alt="Cáliz" class="chalice-icon mb-4">
                 
                 <p class="font-cursive text-4xl gold-text mb-2">Mi Primera</p>
@@ -184,7 +195,7 @@
                 </div>
             </div>
 
-            <!-- ILUSTRACIÓN DEL NIÑO (Desde tu carpeta de imágenes) -->
+            <!-- ILUSTRACIÓN DEL NIÑO -->
             <div class="main-illustration reveal active">
                 <img src="imagen/rezando.jpg" 
                      alt="Daniel Santiago Rezando" 
@@ -232,7 +243,6 @@
 
             <!-- Datos del Evento -->
             <div class="w-full max-w-sm space-y-8 mb-16 reveal">
-                <!-- Fecha -->
                 <div class="text-center py-8 border-y border-[#e5e0d5]">
                     <div class="flex justify-around items-center">
                         <div class="text-right">
@@ -247,7 +257,6 @@
                     </div>
                 </div>
 
-                <!-- Ceremonia -->
                 <div class="card text-center shadow-sm">
                     <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Ceremonia</h4>
                     <p class="font-bold text-gray-700 text-sm">Parroquia de Nuestra Señora de los Dolores</p>
@@ -255,7 +264,6 @@
                     <a href="https://maps.app.goo.gl/uXpX9Mv6kQjU8XvP7" target="_blank" class="mt-6 inline-block btn-gold">Ver Mapa</a>
                 </div>
 
-                <!-- Recepción -->
                 <div class="card text-center shadow-sm">
                     <h4 class="font-serif-elegant text-[#b08d57] text-xs tracking-widest mb-3 uppercase">La Recepción</h4>
                     <p class="font-bold text-gray-700 text-sm">Hotel Marriott Aguascalientes</p>
@@ -263,16 +271,6 @@
                     <a href="https://maps.app.goo.gl/S1S4fW3G8z9R9L6T6" target="_blank" class="mt-6 inline-block btn-gold">Ver Mapa</a>
                 </div>
             </div>
-
-            <!-- Regalo -->
-            <section class="w-full max-w-sm px-4 mb-16 reveal">
-                <div class="bg-white/40 border border-[#e5e0d5] rounded-[40px] p-8 text-center shadow-inner">
-                    <p class="font-serif-elegant text-[10px] uppercase tracking-[0.3em] text-[#b08d57] mb-3">Lluvia de Sobres</p>
-                    <p class="text-[11px] text-gray-500 italic leading-relaxed">
-                        "Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo, contaremos con una cajita en la recepción."
-                    </p>
-                </div>
-            </section>
 
             <!-- RSVP -->
             <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
@@ -301,10 +299,25 @@
                             <p id="previewText" class="text-[12px] text-gray-600 leading-relaxed italic text-center"></p>
                         </div>
                         <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-4 rounded-2xl uppercase text-xs tracking-widest flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.29-4.171c1.589.945 3.554 1.443 5.548 1.444 5.448 0 9.879-4.43 9.882-9.879.001-2.638-1.03-5.118-2.902-6.991-1.872-1.873-4.353-2.904-6.992-2.904-5.448 0-9.879 4.432-9.882 9.881-.001 2.038.536 4.021 1.554 5.761l-1.016 3.71 3.81-.998zm11.488-6.505c-.312-.156-1.848-.912-2.134-1.017-.286-.104-.494-.156-.701.156-.207.312-.804 1.017-.986 1.222-.182.205-.364.234-.676.078-.312-.156-1.316-.484-2.508-1.548-.928-.827-1.554-1.849-1.735-2.16-.182-.312-.019-.481.137-.636.14-.139.312-.364.468-.546.156-.182.208-.312.312-.52.104-.208.052-.39-.026-.546-.078-.156-.701-1.691-.961-2.313-.253-.607-.511-.525-.701-.535-.181-.01-.389-.011-.597-.011s-.546.078-.832.39c-.286.312-1.092 1.067-1.092 2.601 0 1.534 1.118 3.018 1.274 3.226.156.208 2.2 3.359 5.331 4.71.745.322 1.327.514 1.78.658.749.237 1.43.204 1.968.124.6-.09 1.847-.755 2.108-1.485.26-.73.26-1.353.182-1.485-.077-.13-.285-.208-.597-.364z"/></svg>
                             Enviar por WhatsApp
                         </button>
                     </div>
+                </div>
+            </section>
+
+            <!-- Sección de Colaboración y Logos -->
+            <section class="w-full max-w-sm mb-10 text-center reveal">
+                <div class="flex items-center justify-center gap-6 mb-4">
+                    <img src="imagen/copymax.png" alt="Copy Max" class="footer-logo">
+                    <div class="w-[1px] h-6 bg-stone-300"></div>
+                    <img src="imagen/pixelar.png" alt="PixelAR" class="footer-logo">
+                </div>
+                <div class="px-6">
+                    <p class="text-[9px] text-gray-400 uppercase tracking-widest leading-loose">
+                        Hecho en <span class="text-gray-600 font-semibold">Copy Max</span> en colaboración con <span class="text-gray-600 font-semibold">PixelAR</span><br>
+                        Diseñador Gráfico: <span class="italic">Alfredo Vázquez</span><br>
+                        Para el festejado: <span class="text-[#b08d57]">Daniel Santiago</span>
+                    </p>
                 </div>
             </section>
 
@@ -319,47 +332,30 @@
     </div>
 
     <script>
-        // Sistema de Chispas Celestiales
         function createSparkles() {
             const container = document.getElementById('sparkles-container');
             const sparkleCount = 20;
-
             for (let i = 0; i < sparkleCount; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'sparkle';
-                
                 const size = Math.random() * 4 + 2;
                 sparkle.style.width = `${size}px`;
                 sparkle.style.height = `${size}px`;
-                
                 sparkle.style.left = `${Math.random() * 100}%`;
                 sparkle.style.top = `${Math.random() * 100}%`;
-                
                 const duration = Math.random() * 3 + 2;
                 sparkle.style.setProperty('--duration', `${duration}s`);
                 sparkle.style.animationDelay = `${Math.random() * 5}s`;
-                
                 container.appendChild(sparkle);
             }
         }
 
-        // Cuenta Regresiva
         const targetDate = new Date("June 6, 2026 13:00:00").getTime();
-
         function updateCountdown() {
             const now = new Date().getTime();
             const gap = targetDate - now;
-
-            const second = 1000;
-            const minute = second * 60;
-            const hour = minute * 60;
-            const day = hour * 24;
-
-            const d = Math.floor(gap / day);
-            const h = Math.floor((gap % day) / hour);
-            const m = Math.floor((gap % hour) / minute);
-            const s = Math.floor((gap % minute) / second);
-
+            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+            const d = Math.floor(gap / day), h = Math.floor((gap % day) / hour), m = Math.floor((gap % hour) / minute), s = Math.floor((gap % minute) / second);
             document.getElementById('days').innerText = d < 10 ? '0'+d : d;
             document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
             document.getElementById('minutes').innerText = m < 10 ? '0'+m : m;
@@ -368,19 +364,15 @@
 
         setInterval(updateCountdown, 1000);
 
-        // RSVP
         const telefono = "5214498040411";
         let finalMessage = "";
-
         function previewConfirmation() {
             const nombre = document.getElementById('guestName').value.trim();
             const cantidad = document.getElementById('guestCount').value;
-
             if (!nombre) {
-                document.getElementById('guestName').classList.add('ring-2', 'ring-red-300');
+                document.getElementById('guestName').style.border = "1px solid #b08d57";
                 return;
             }
-
             finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos para celebrar con Daniel Santiago!`;
             document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
             document.getElementById('step-form').classList.add('hidden');
@@ -391,7 +383,6 @@
             window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(finalMessage)}`, '_blank');
         }
 
-        // Reveal al scroll
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
