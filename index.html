@@ -13,7 +13,7 @@
     <!-- Firebase SDKs -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = JSON.parse(__firebase_config);
@@ -23,7 +23,13 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'daniel-santiago-comunion';
 
         const initAuth = async () => {
-            try { await signInAnonymously(auth); } catch (e) { console.error(e); }
+            try { 
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (e) { console.error(e); }
         };
         initAuth();
 
@@ -58,7 +64,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* SOBRE INICIAL CON SELLO REAL */
+        /* SOBRE INICIAL */
         #envelope-overlay {
             position: fixed; inset: 0;
             background: var(--cream-bg);
@@ -86,7 +92,6 @@
             50% { transform: scale(1.08); filter: drop-shadow(0 20px 35px rgba(0,0,0,0.4)); }
         }
 
-        /* EFECTO DORADO Y TINTINEO */
         .gold-shimmer {
             background: linear-gradient(to right, #b08d57 20%, #f1c40f 40%, #f1c40f 60%, #b08d57 80%);
             background-size: 200% auto;
@@ -105,7 +110,7 @@
         }
         @keyframes pulse-text {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.05); color: #d4af37; }
+            50% { opacity: 0.7; transform: scale(1.05); }
         }
 
         .font-serif-elegant { font-family: 'Cinzel', serif; }
@@ -154,8 +159,8 @@
             border-radius: 25px;
             overflow: hidden;
             margin: 20px 0;
-            border: 1px solid #f0f0f0;
-            background-color: #eee;
+            background-color: #f3f3f3;
+            border: 1px solid #eee;
         }
 
         .btn-gold-action {
@@ -164,10 +169,11 @@
             border: 1.5px solid var(--gold-accent); border-radius: 50px;
             padding: 12px 28px; font-size: 11px; text-transform: uppercase;
             letter-spacing: 2px; font-weight: 700; transition: all 0.3s;
+            cursor: pointer;
         }
         .btn-gold-action:hover { background: var(--gold-accent); color: white; }
 
-        /* ANIMACIÓN SONIDO */
+        /* AUDIO UI */
         #audio-btn {
             position: fixed; bottom: 25px; right: 25px; z-index: 100;
             width: 50px; height: 50px; background: white; border-radius: 50%;
@@ -180,35 +186,40 @@
         #audio-btn.playing .music-bar:nth-child(1) { animation-delay: 0.0s; }
         #audio-btn.playing .music-bar:nth-child(2) { animation-delay: 0.2s; }
         #audio-btn.playing .music-bar:nth-child(3) { animation-delay: 0.4s; }
-        
-        @keyframes musicBarHeight { 
-            0%, 100% { height: 6px; } 
-            50% { height: 20px; } 
-        }
+        @keyframes musicBarHeight { 0%, 100% { height: 6px; } 50% { height: 20px; } }
 
+        /* BURBUJA DE AUDIO UX */
         #music-hint {
             position: fixed; bottom: 85px; right: 25px;
-            background: var(--gold-accent); color: white;
-            padding: 8px 15px; border-radius: 20px; font-size: 11px;
-            white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            animation: pulseHint 2.5s infinite ease-in-out;
-            z-index: 101; transition: opacity 0.5s ease;
+            background: rgba(176, 141, 87, 0.95); color: white;
+            padding: 10px 18px; border-radius: 24px; font-size: 11px;
+            white-space: nowrap; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            z-index: 101; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0; transform: translateY(10px) scale(0.9);
+            pointer-events: none;
         }
+        #music-hint.show { opacity: 1; transform: translateY(0) scale(1); }
         #music-hint::after {
-            content: ''; position: absolute; bottom: -5px; right: 15px;
+            content: ''; position: absolute; bottom: -6px; right: 15px;
             border-left: 8px solid transparent; border-right: 8px solid transparent;
-            border-top: 8px solid var(--gold-accent);
+            border-top: 8px solid rgba(176, 141, 87, 0.95);
         }
 
+        /* SCROLL HINT */
         #scroll-hint {
             position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%);
             z-index: 200; pointer-events: none;
+            transition: opacity 0.8s ease;
         }
-        .scroll-icon { width: 120px; animation: scrollJump 2.2s infinite ease-in-out; filter: grayscale(1); }
-        @keyframes scrollJump {
+        .scroll-icon { 
+            width: 80px; 
+            animation: scrollFlow 2s infinite ease-in-out; 
+            filter: sepia(1) saturate(0.5) opacity(0.6); 
+        }
+        @keyframes scrollFlow {
             0% { transform: translateY(40px); opacity: 0; }
-            50% { transform: translateY(0px); opacity: 0.6; }
-            100% { transform: translateY(-50px); opacity: 0; }
+            50% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-40px); opacity: 0; }
         }
 
         .footer-logo-item img {
@@ -237,6 +248,7 @@
         <p class="mt-8 font-serif-elegant text-[#b08d57] text-[11px] tracking-[0.3em] uppercase">Toca el sello para abrir</p>
     </div>
 
+    <!-- Audio (Se inicia al abrir) -->
     <audio id="bg-music" loop preload="auto">
         <source src="song/audio.mp3" type="audio/mpeg">
     </audio>
@@ -245,7 +257,7 @@
         <img src="imagen/scroll.png" alt="Desliza" class="scroll-icon">
     </div>
 
-    <div id="music-hint" class="hidden">Poner música 🎵</div>
+    <div id="music-hint">Poner música 🎵</div>
 
     <div id="audio-btn" onclick="toggleMusic()" class="hidden">
         <div id="music-icon" class="flex items-end gap-1 h-5">
@@ -285,19 +297,16 @@
                 <div id="event-message" class="hidden text-center py-4">
                     <p class="font-serif-elegant text-2xl gold-shimmer tracking-widest uppercase">¡Hoy es el gran día!</p>
                 </div>
-                <div id="post-event-message" class="hidden text-center py-4">
-                    <p class="font-cursive text-4xl text-[#b08d57]">¡Gracias por acompañarnos!</p>
-                </div>
             </div>
 
             <section class="max-w-xs text-center mb-16 reveal">
-                <p class="font-classic italic text-gray-600 text-lg leading-relaxed">
+                <p class="font-classic italic text-gray-600 text-lg leading-relaxed px-4">
                     "Que Jesús te acompañe siempre en tu camino, Daniel Santiago."
                 </p>
                 <div class="w-16 h-[1px] bg-[#b08d57]/30 mx-auto mt-8"></div>
             </section>
 
-            <!-- Fecha con Calendario -->
+            <!-- Fecha -->
             <div class="w-full max-w-sm reveal mb-16">
                 <div class="text-center py-10 border-y border-[#e5e0d5]">
                     <div class="flex justify-around items-center mb-6">
@@ -311,47 +320,76 @@
                             <p class="text-xs text-gray-400 uppercase">1:00 PM</p>
                         </div>
                     </div>
-                    <button onclick="addToCalendar()" class="btn-gold-action">
-                        Agendar Evento
-                    </button>
+                    <button onclick="addToCalendar()" class="btn-gold-action">Agendar Evento</button>
                 </div>
             </div>
 
-            <!-- UBICACIONES RESTAURADAS -->
+            <!-- UBICACIONES REPARADAS -->
             <div class="w-full max-w-sm space-y-6 mb-16 reveal">
+                <!-- Ceremonia -->
                 <div class="card text-center">
-                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Ceremonia</h4>
-                    <p class="font-bold text-gray-700 text-base mb-2">Parroquia de Nuestra Señora de los Dolores</p>
-                    <p class="pulse-time text-lg mb-2">1:00 PM</p>
-                    <p class="text-xs text-gray-500 mb-4 px-4">Av. Convención de 1914 Poniente 1914, Barrio de San Marcos, CP 20070.</p>
-                    <div class="map-container">
-                        <iframe src="https://maps.google.com/maps?q=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v3M10 3.5h4M12 5L7 10v12h10V10z" />
+                            <path d="M12 22v-5M9 22v-3a3 3 0 0 1 6 0v3" />
+                            <path d="M7 14h10M10 10l2-2 2 2" />
+                            <circle cx="12" cy="12.5" r="1.5" />
+                        </svg>
                     </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes" target="_blank" class="btn-gold-action">Ver en Maps</a>
+                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Ceremonia</h4>
+                    <p class="font-bold text-gray-700 text-base mb-2 px-2">Parroquia de Nuestra Señora de los Dolores</p>
+                    <p class="pulse-time text-lg mb-2">1:00 PM</p>
+                    <p class="text-[11px] text-gray-500 mb-4 px-4 leading-relaxed">Av. Convención de 1914 Poniente 1914, Aguascalientes.</p>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3702.327663248679!2d-102.3168869!3d21.8834469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429ee671899176f%3A0x67c29b7d87895180!2sParroquia%20de%20Nuestra%20Se%C3%B1ora%20de%20los%20Dolores!5e0!3m2!1ses-419!2smx!4v1713456789012!5m2!1ses-419!2smx" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes" target="_blank" class="btn-gold-action">
+                        Ver en Maps
+                    </a>
                 </div>
 
+                <!-- Recepción -->
                 <div class="card text-center">
-                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Recepción</h4>
-                    <p class="font-bold text-gray-700 text-base mb-2">Hotel Marriott Aguascalientes</p>
-                    <p class="pulse-time text-lg mb-2">3:00 PM</p>
-                    <p class="text-xs text-gray-500 mb-4 px-4">Blvd. a Zacatecas 402, Las Trojes, CP 20115.</p>
-                    <div class="map-container">
-                        <iframe src="https://maps.google.com/maps?q=Hotel+Marriott+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10" />
+                        </svg>
                     </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Marriott+Aguascalientes" target="_blank" class="btn-gold-action">Ver en Maps</a>
+                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Recepción</h4>
+                    <p class="font-bold text-gray-700 text-base mb-2 px-2">Hotel Marriott Aguascalientes</p>
+                    <p class="pulse-time text-lg mb-2">3:00 PM</p>
+                    <p class="text-[11px] text-gray-500 mb-4 px-4 leading-relaxed">Blvd. a Zacatecas 402, Las Trojes, Aguascalientes.</p>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3701.3283313028445!2d-102.296561!3d21.9219439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8429eee94073356f%3A0xe54e339b3626e95!2sAguascalientes%20Marriott%20Hotel!5e0!3m2!1ses-419!2smx!4v1713456850000!5m2!1ses-419!2smx" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Marriott+Aguascalientes" target="_blank" class="btn-gold-action">
+                        Ver en Maps
+                    </a>
                 </div>
             </div>
 
             <!-- VESTIMENTA Y REGALOS -->
             <div class="w-full max-w-sm space-y-6 mb-16 reveal">
                 <div class="card text-center bg-white">
+                    <div class="flex justify-center mb-4 text-[#b08d57]">
+                        <svg class="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.62 1.96V10a2 2 0 002 2h16a2 2 0 002-2V5.42a2 2 0 00-1.62-1.96z" />
+                            <path d="M12 2v10M12 5l-2-1M12 5l2-1" />
+                            <path d="M6 12l1 10h4l1-6 1 6h4l1-10" />
+                        </svg>
+                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-2 uppercase">Código de Vestimenta</h4>
                     <p class="text-lg font-bold text-gray-800">Formal</p>
-                    <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest">¡Luce tu mejor gala!</p>
                 </div>
+
                 <div class="card text-center bg-white/50">
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                        </svg>
+                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">Sugerencia de Regalos</h4>
-                    <p class="text-sm text-gray-600 italic px-2">"Su presencia es el mejor regalo, pero si desean tener un detalle, lo pueden dejar en la cajita en la recepción. Lo que nazca de su corazón será bienvenido."</p>
+                    <p class="text-[13px] text-gray-600 italic px-4 leading-relaxed">"Su presencia es el mejor regalo. Si desean tener un detalle adicional, lo pueden dejar en la recepción."</p>
                 </div>
             </div>
 
@@ -373,9 +411,9 @@
                             </select>
                             <button onclick="handleConfirm()" id="btn-confirm" class="w-full bg-[#5a6e5a] text-white font-bold py-5 rounded-2xl uppercase tracking-widest active:scale-95 transition-all shadow-md">Confirmar Asistencia</button>
                         </div>
-                        <div id="step-preview" class="hidden space-y-8">
-                            <div class="bg-stone-50 p-8 rounded-3xl"><p id="previewText" class="text-sm text-gray-600 italic text-center"></p></div>
-                            <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-2xl uppercase text-[12px] tracking-widest flex items-center justify-center gap-3">Enviar WhatsApp</button>
+                        <div id="step-preview" class="hidden space-y-8 text-center">
+                            <div class="bg-stone-50 p-8 rounded-3xl"><p id="previewText" class="text-sm text-gray-600 italic"></p></div>
+                            <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-2xl uppercase text-[12px] tracking-widest flex items-center justify-center gap-3 shadow-lg">Enviar WhatsApp</button>
                         </div>
                     </div>
                 </div>
@@ -403,7 +441,6 @@
         </div>
     </div>
 
-    <!-- Modal Flyer -->
     <div id="flayer-modal">
         <button onclick="closeFlayer()" class="absolute top-6 right-6 text-white text-5xl font-light">&times;</button>
         <div class="w-full max-w-sm max-h-[70vh] overflow-hidden rounded-3xl mb-10">
@@ -422,12 +459,6 @@
         let isPlaying = false;
         let finalMessage = "";
 
-        function checkURLGreeting() {
-            const params = new URLSearchParams(window.location.search);
-            const name = params.get('n');
-            if (name) document.getElementById('guest-greeting').innerText = `Invitación para: ${name}`;
-        }
-
         function checkExistingRSVP() {
             const stored = localStorage.getItem('confirmed_rsvp_daniel');
             if (stored) {
@@ -438,13 +469,46 @@
             }
         }
 
+        // CONTROL DE BURBUJA UX POR TIEMPOS
+        let hintInterval;
+        function showMusicHintTimer() {
+            if (hintInterval) clearInterval(hintInterval);
+            
+            // Aparece a los 5 segundos
+            setTimeout(() => {
+                if (envelope.classList.contains('opened')) {
+                    musicHint.classList.add('show');
+                    // Desaparece tras 4 segundos
+                    setTimeout(() => musicHint.classList.remove('show'), 4000);
+                }
+            }, 5000);
+
+            // Recordatorio cada 45 segundos
+            hintInterval = setInterval(() => {
+                if (envelope.classList.contains('opened')) {
+                    musicHint.classList.add('show');
+                    setTimeout(() => musicHint.classList.remove('show'), 4000);
+                }
+            }, 45000);
+        }
+
         function openInvitation() {
             envelope.classList.add('opened');
             audioBtn.classList.remove('hidden');
-            scrollHint.classList.remove('hidden');
-            musicHint.classList.remove('hidden');
+            if(scrollHint) scrollHint.classList.remove('hidden');
+            
+            // Iniciar música automáticamente al abrir
             audio.volume = 0.4;
-            audio.play().then(() => { isPlaying = true; audioBtn.classList.add('playing'); updateMusicHint(); }).catch(e => {});
+            audio.play().then(() => { 
+                isPlaying = true; 
+                audioBtn.classList.add('playing'); 
+                updateMusicHintText();
+            }).catch(e => {
+                console.log("Auto-play prevenido por el navegador");
+                musicHint.classList.add('show');
+            });
+
+            showMusicHintTimer();
             setTimeout(reveal, 1200);
         }
 
@@ -453,12 +517,14 @@
             else audio.play();
             isPlaying = !isPlaying;
             audioBtn.classList.toggle('playing', isPlaying);
-            updateMusicHint();
+            updateMusicHintText();
+            
+            // Si el usuario interactúa, ocultamos la burbuja inmediatamente
+            musicHint.classList.remove('show');
         }
 
-        function updateMusicHint() {
-            if (isPlaying) musicHint.innerText = "Silenciar si gustas 🔇";
-            else musicHint.innerText = "Poner música 🎵";
+        function updateMusicHintText() {
+            musicHint.innerText = isPlaying ? "Silenciar si gustas 🔇" : "Reproducir música 🎵";
         }
 
         async function handleConfirm() {
@@ -494,29 +560,20 @@
             });
         }
 
-        const targetDate = new Date(2026, 5, 6, 13, 0, 0).getTime(); // Junio es mes 5
-        const endOfDay = new Date(2026, 5, 7, 0, 0, 0).getTime();
+        // SCROLL HANDLING
+        window.addEventListener("scroll", () => { 
+            reveal(); 
+            // Ocultar icono de scroll al primer movimiento
+            if (scrollHint && !scrollHint.classList.contains('hidden')) {
+                scrollHint.style.opacity = '0';
+                setTimeout(() => scrollHint.classList.add('hidden'), 800);
+            }
+        });
 
+        const targetDate = new Date(2026, 5, 6, 13, 0, 0).getTime();
         function updateTimer() {
             const now = new Date().getTime();
             const gap = targetDate - now;
-            const contUI = document.getElementById('countdown-container');
-            const eventUI = document.getElementById('event-message');
-            const postUI = document.getElementById('post-event-message');
-
-            if (now > endOfDay) {
-                if(contUI) contUI.classList.add('hidden');
-                if(eventUI) eventUI.classList.add('hidden');
-                if(postUI) postUI.classList.remove('hidden');
-                return;
-            }
-            const today = new Date();
-            if (today.getFullYear() === 2026 && today.getMonth() === 5 && today.getDate() === 6) {
-                if(contUI) contUI.classList.add('hidden');
-                if(eventUI) eventUI.classList.remove('hidden');
-                if(postUI) postUI.classList.add('hidden');
-                return;
-            }
             if (gap > 0) {
                 const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
                 const d = Math.floor(gap / day);
@@ -532,15 +589,7 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        window.addEventListener("scroll", () => { 
-            reveal(); 
-            if(scrollHint) scrollHint.style.opacity = '0'; 
-            if(musicHint) musicHint.style.opacity = '0';
-        });
-
-        window.onload = () => { checkURLGreeting(); checkExistingRSVP(); };
+        window.onload = () => { checkExistingRSVP(); };
     </script>
 </body>
 </html>
-
-
