@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -149,6 +148,16 @@
             border: 1px solid rgba(0,0,0,0.02); margin-bottom: 30px;
         }
 
+        .map-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid #f0f0f0;
+            background-color: #eee;
+        }
+
         .btn-gold-action {
             display: inline-flex; align-items: center; justify-content: center;
             background-color: transparent; color: var(--gold-accent);
@@ -158,12 +167,13 @@
         }
         .btn-gold-action:hover { background: var(--gold-accent); color: white; }
 
-        /* REPARACIÓN ANIMACIÓN SONIDO */
+        /* ANIMACIÓN SONIDO */
         #audio-btn {
             position: fixed; bottom: 25px; right: 25px; z-index: 100;
             width: 50px; height: 50px; background: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1.5px solid var(--gold-accent);
+            cursor: pointer;
         }
         .music-bar { width: 4px; background: var(--gold-accent); border-radius: 2px; height: 6px; margin: 0 1px; }
         #audio-btn.playing .music-bar { animation: musicBarHeight 0.8s infinite ease-in-out; }
@@ -307,7 +317,7 @@
                 </div>
             </div>
 
-            <!-- UBICACIONES -->
+            <!-- UBICACIONES RESTAURADAS -->
             <div class="w-full max-w-sm space-y-6 mb-16 reveal">
                 <div class="card text-center">
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Ceremonia</h4>
@@ -484,27 +494,22 @@
             });
         }
 
-        // Lógica del Temporizador Reparada
-        const targetDate = new Date(2026, 5, 6, 13, 0, 0).getTime(); // Junio es mes 5 (0-11)
+        const targetDate = new Date(2026, 5, 6, 13, 0, 0).getTime(); // Junio es mes 5
         const endOfDay = new Date(2026, 5, 7, 0, 0, 0).getTime();
 
         function updateTimer() {
             const now = new Date().getTime();
             const gap = targetDate - now;
-            
             const contUI = document.getElementById('countdown-container');
             const eventUI = document.getElementById('event-message');
             const postUI = document.getElementById('post-event-message');
 
-            // Caso 1: Pasado el evento (Día siguiente)
             if (now > endOfDay) {
                 if(contUI) contUI.classList.add('hidden');
                 if(eventUI) eventUI.classList.add('hidden');
                 if(postUI) postUI.classList.remove('hidden');
                 return;
             }
-
-            // Caso 2: Es hoy (6 de Junio de 2026)
             const today = new Date();
             if (today.getFullYear() === 2026 && today.getMonth() === 5 && today.getDate() === 6) {
                 if(contUI) contUI.classList.add('hidden');
@@ -512,24 +517,20 @@
                 if(postUI) postUI.classList.add('hidden');
                 return;
             }
-
-            // Caso 3: Cuenta regresiva normal
             if (gap > 0) {
                 const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
                 const d = Math.floor(gap / day);
                 const h = Math.floor((gap % day) / hour);
                 const m = Math.floor((gap % hour) / minute);
                 const s = Math.floor((gap % minute) / second);
-
                 document.getElementById('days').innerText = d < 10 ? '0' + d : d;
                 document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
                 document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
                 document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
             }
         }
-
         setInterval(updateTimer, 1000);
-        updateTimer(); // Llamar una vez al cargar
+        updateTimer();
 
         window.addEventListener("scroll", () => { 
             reveal(); 
@@ -541,6 +542,5 @@
     </script>
 </body>
 </html>
-
 
 
