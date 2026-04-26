@@ -7,6 +7,35 @@
     <title>Primera Comunión - Daniel Santiago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:italic,wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'daniel-santiago-comunion';
+
+        const initAuth = async () => {
+            try { await signInAnonymously(auth); } catch (e) { console.error(e); }
+        };
+        initAuth();
+
+        window.saveRSVP = async (data) => {
+            if (!auth.currentUser) await signInAnonymously(auth);
+            const rsvpRef = collection(db, 'artifacts', appId, 'public', 'data', 'confirmaciones');
+            return await addDoc(rsvpRef, {
+                ...data,
+                timestamp: serverTimestamp(),
+                userId: auth.currentUser.uid
+            });
+        };
+    </script>
+
     <style>
         :root {
             --primary-green: #5a6e5a;
@@ -25,7 +54,59 @@
             font-family: 'Montserrat', sans-serif;
             color: #4a4a4a;
             -webkit-font-smoothing: antialiased;
-            font-size: 16px;
+        }
+
+        /* SOBRE INICIAL CON SELLO REAL */
+        #envelope-overlay {
+            position: fixed; inset: 0;
+            background: var(--cream-bg);
+            z-index: 500;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        #envelope-overlay.opened { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+
+        .wax-seal {
+            width: 140px; height: 140px;
+            cursor: pointer;
+            background-image: url('imagen/sello.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35)) brightness(1.05);
+            position: relative;
+            animation: seal-pulse 2.5s infinite ease-in-out;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .wax-seal:active { transform: scale(0.9); }
+
+        @keyframes seal-pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25)) brightness(1.05); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 20px 35px rgba(0,0,0,0.4)) brightness(1.15); }
+        }
+
+        /* EFECTO DORADO Y TINTINEO */
+        .gold-shimmer {
+            background: linear-gradient(to right, #b08d57 20%, #f1c40f 40%, #f1c40f 60%, #b08d57 80%);
+            background-size: 200% auto;
+            color: #000;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 2s linear infinite;
+        }
+
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        .pulse-time {
+            color: var(--gold-accent);
+            animation: pulse-text 2s infinite ease-in-out;
+            font-weight: 700;
+        }
+        @keyframes pulse-text {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); color: #d4af37; }
         }
 
         .font-serif-elegant { font-family: 'Cinzel', serif; }
@@ -42,568 +123,468 @@
             z-index: 1;
         }
 
-        #sparkles-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .sparkle {
-            position: absolute;
-            background: radial-gradient(circle, #fff 10%, var(--gold-accent) 40%, transparent 100%);
-            border-radius: 50%;
-            opacity: 0;
-            animation: twinkle var(--duration) infinite ease-in-out;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0; transform: scale(0.3) translateY(0); }
-            50% { opacity: 0.8; transform: scale(1) translateY(-20px); }
-            100% { opacity: 0; transform: scale(0.3) translateY(-40px); }
-        }
-
-        .botanical-header {
-            width: 100%;
-            height: 180px;
-            background-image: url('https://www.transparentpng.com/download/watercolor-leaves/watercolor-leaves-transparent-images-12.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: top center;
-            opacity: 0.6;
-            transform: scaleY(-1);
-        }
-
-        .botanical-footer {
-            width: 100%;
-            height: 150px;
-            background-image: url('https://www.transparentpng.com/download/watercolor-leaves/watercolor-leaves-transparent-images-12.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: bottom center;
-            opacity: 0.6;
-            margin-top: -30px;
+        .header-section {
+            padding-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .main-illustration {
             width: 85%;
-            max-width: 320px;
-            border-radius: 160px 160px 20px 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            border: 10px solid white;
-            margin: -40px auto 30px;
+            max-width: 300px;
+            border-radius: 150px 150px 20px 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: 6px solid white;
+            margin: 30px auto 30px;
             overflow: hidden;
             background: #fff;
             animation: float 6s ease-in-out infinite;
         }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .card {
+            background: white;
+            border-radius: 40px;
+            padding: 40px 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+            margin-bottom: 30px;
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.2s cubic-bezier(0.17, 0.55, 0.55, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .map-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid #f0f0f0;
+            background-color: #eee;
         }
 
-        .btn-gold {
+        .btn-maps {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background-color: transparent;
             color: var(--gold-accent);
             border: 1.5px solid var(--gold-accent);
             border-radius: 50px;
-            padding: 12px 30px;
-            font-size: 12px;
+            padding: 12px 28px;
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 700;
             transition: all 0.3s;
+            margin-top: 15px;
         }
-        .btn-gold:hover {
-            background: var(--gold-accent);
-            color: white;
-        }
+        .btn-maps:hover { background: var(--gold-accent); color: white; }
 
-        .card {
-            background: white;
-            border-radius: 30px;
-            padding: 40px 30px;
-            border: 1px solid rgba(0,0,0,0.03);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        }
-
-        /* Logos pie de página (76px = aprox 2cm) */
-        .footer-logo-container {
-            filter: grayscale(100%);
-            opacity: 0.4;
-            transition: all 0.5s ease;
-        }
-        .footer-logo-container:hover {
-            filter: grayscale(0%);
-            opacity: 0.9;
-        }
-
-        .logo-alfredo, .logo-pixelar, .logo-copymax {
-            width: 76px;
-            height: auto;
-            margin: 0 auto;
-            display: block;
-            cursor: pointer;
-        }
-
-        .professional-credits {
-            border-top: 1px solid rgba(0,0,0,0.05);
-            padding-top: 60px;
-            margin-top: 40px;
-            width: 100%;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Botón de Audio */
         #audio-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 100;
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; bottom: 25px; right: 25px;
+            z-index: 100; width: 50px; height: 50px;
+            background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             border: 1.5px solid var(--gold-accent);
             cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .music-bar {
-            width: 3px;
-            background: var(--gold-accent);
-            border-radius: 1px;
-            height: 5px;
-            transition: all 0.2s ease;
-        }
-        #audio-btn.playing .music-bar {
-            animation: musicBarHeight 0.8s infinite ease-in-out;
-        }
+        .music-bar { width: 3px; background: var(--gold-accent); border-radius: 1px; height: 5px; }
+        #audio-btn.playing .music-bar { animation: musicBarHeight 0.8s infinite ease-in-out; }
         #audio-btn.playing .music-bar:nth-child(1) { animation-delay: 0s; }
         #audio-btn.playing .music-bar:nth-child(2) { animation-delay: 0.2s; }
         #audio-btn.playing .music-bar:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes musicBarHeight { 0%, 100% { height: 6px; } 50% { height: 18px; } }
 
-        @keyframes musicBarHeight {
-            0%, 100% { height: 6px; }
-            50% { height: 18px; }
-        }
-
-        /* BURBUJA DE MÚSICA - Texto blanco sobre dorado */
         #music-hint {
-            position: fixed;
-            bottom: 85px;
-            right: 25px;
-            background: var(--gold-accent);
-            color: white;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 12px;
-            font-weight: 700;
-            white-space: nowrap;
-            box-shadow: 0 6px 15px rgba(176, 141, 87, 0.3);
+            position: fixed; bottom: 85px; right: 25px;
+            background: var(--gold-accent); color: white;
+            padding: 8px 15px; border-radius: 20px;
+            font-size: 11px; font-weight: 600;
+            white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             animation: pulseHint 2.5s infinite ease-in-out;
-            z-index: 101;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            z-index: 101; transition: opacity 0.5s ease;
         }
         #music-hint::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            right: 18px;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
+            content: ''; position: absolute; bottom: -5px; right: 15px;
+            border-left: 8px solid transparent; border-right: 8px solid transparent;
             border-top: 8px solid var(--gold-accent);
         }
 
-        @keyframes pulseHint {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-5px) scale(1.05); }
-        }
-
-        /* INDICADOR DE SCROLL (MANITA) - Grande y Sólida */
         #scroll-hint {
-            position: fixed;
-            top: 55%;
-            left: 50%;
+            position: fixed; top: 60%; left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 200;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            pointer-events: none;
-            opacity: 1; 
-            transition: opacity 0.8s ease;
-            filter: grayscale(100%);
+            z-index: 200; pointer-events: none;
         }
-        .scroll-icon {
-            width: 150px;
-            height: auto;
-            animation: scrollJump 2.2s infinite ease-in-out;
-        }
+        .scroll-icon { width: 120px; animation: scrollJump 2.2s infinite ease-in-out; filter: grayscale(1); }
         @keyframes scrollJump {
             0% { transform: translateY(40px); opacity: 0; }
-            50% { transform: translateY(0px); opacity: 0.8; }
+            50% { transform: translateY(0px); opacity: 0.6; }
             100% { transform: translateY(-50px); opacity: 0; }
         }
 
-        /* Modal del Flayer */
+        /* Footer logos con efecto color */
+        .footer-logo-item img {
+            width: 76px; height: auto; margin: 0 auto; display: block;
+            filter: grayscale(100%); transition: all 0.4s ease;
+        }
+        .footer-logo-item:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
         #flayer-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 300;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 600; display: none; flex-direction: column;
+            align-items: center; justify-content: center; padding: 20px;
             backdrop-filter: blur(10px);
         }
-        #flayer-modal.active {
-            display: flex;
-        }
+        #flayer-modal.active { display: flex; }
     </style>
 </head>
 <body>
 
-    <!-- Elemento Audio -->
-    <audio id="bg-music" loop>
+    <!-- Pantalla de Inicio -->
+    <div id="envelope-overlay">
+        <div class="text-center mb-10 reveal active">
+            <p class="font-serif-elegant text-gray-400 tracking-[0.3em] uppercase text-[10px] mb-4">Tienes una invitación de</p>
+            <h2 class="font-cursive text-5xl text-gray-800">Daniel Santiago</h2>
+        </div>
+        <div class="wax-seal" onclick="openInvitation()"></div>
+        <p class="mt-8 font-serif-elegant text-[#b08d57] text-[11px] tracking-[0.3em] uppercase">Toca el sello para abrir</p>
+    </div>
+
+    <audio id="bg-music" loop preload="auto">
         <source src="song/audio.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Indicador de Scroll -->
-    <div id="scroll-hint">
+    <div id="scroll-hint" class="hidden">
         <img src="imagen/scroll.png" alt="Desliza" class="scroll-icon">
     </div>
 
-    <!-- Burbuja de Música -->
-    <div id="music-hint">Toca para música 🎵</div>
+    <div id="music-hint" class="hidden">Poner música 🎵</div>
 
-    <!-- Modal Flayer PixelAR -->
-    <div id="flayer-modal">
-        <button onclick="closeFlayer()" class="absolute top-6 right-6 text-white text-6xl font-light outline-none">&times;</button>
-        <div class="w-full max-w-md max-h-[70vh] overflow-hidden rounded-3xl shadow-2xl mb-10 border border-white/10">
-            <img src="imagen/flayer.png" alt="PixelAR Flayer" class="w-full h-full object-contain">
-        </div>
-        <button onclick="window.open('https://wa.me/524491920474?text=Hola%20Alfredo,%20me%20gustar%C3%ADa%20cotizar%20un%20servicio%20de%20dise%C3%B1o%20visto%20en%20la%20invitaci%C3%B3n%20de%20Daniel.', '_blank')" 
-           class="bg-[#25D366] text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl flex items-center gap-3 active:scale-95 transition-all">
-            Solicitar Cotización
-        </button>
-    </div>
-
-    <!-- Botón Flotante de Audio -->
-    <div id="audio-btn" onclick="toggleMusic()">
+    <div id="audio-btn" onclick="toggleMusic()" class="hidden">
         <div id="music-icon" class="flex items-end gap-1 h-5">
-            <span class="music-bar"></span>
-            <span class="music-bar"></span>
-            <span class="music-bar"></span>
+            <span class="music-bar"></span><span class="music-bar"></span><span class="music-bar"></span>
         </div>
         <svg id="mute-icon" class="w-6 h-6 text-gray-300 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
     </div>
 
-    <div id="sparkles-container"></div>
-
     <div class="watercolor-canvas">
-        <div class="botanical-header"></div>
+        <div class="w-full h-40 bg-[url('https://www.transparentpng.com/download/watercolor-leaves/watercolor-leaves-transparent-images-12.png')] bg-contain bg-no-repeat bg-top opacity-40 transform scale-y-[-1]"></div>
 
-        <div class="relative z-10 flex flex-col items-center px-6">
+        <div class="relative z-10 flex flex-col items-center px-6 mt-[-60px]">
             
-            <!-- Título Principal -->
-            <div class="text-center mt-[-40px] mb-8">
-                <img src="imagen/copa.png" alt="Cáliz" class="w-24 mx-auto mb-4 drop-shadow-md">
-                <p class="font-cursive text-5xl text-[#b08d57] mb-2">Mi Primera</p>
+            <!-- Encabezado Armonizado -->
+            <div class="header-section text-center mb-2 reveal">
+                <img src="imagen/copa.png" alt="Copa" class="w-20 mx-auto mb-4 drop-shadow-md" loading="lazy">
+                <p class="font-cursive text-5xl text-[#b08d57] mb-1">Mi Primera</p>
                 <p class="font-serif-elegant text-3xl tracking-[0.2em] text-gray-700 uppercase">Comunión</p>
-                
-                <div class="flex items-center justify-center gap-4 my-6">
-                    <div class="h-[1.5px] w-14 bg-[#b08d57]/30"></div>
-                    <span class="text-[#b08d57] text-sm">🕊️</span>
-                    <div class="h-[1.5px] w-14 bg-[#b08d57]/30"></div>
-                </div>
             </div>
 
-            <div class="main-illustration">
-                <img src="imagen/rezando.jpg" alt="Daniel Santiago" class="w-full h-full object-cover">
+            <div class="main-illustration reveal">
+                <img src="imagen/rezando.jpg" alt="Daniel Santiago" class="w-full h-full object-cover" loading="lazy">
             </div>
 
-            <div class="text-center mb-10 reveal active">
+            <div class="text-center mb-10 reveal">
                 <h1 class="font-cursive text-7xl text-gray-800">Daniel Santiago</h1>
                 <p class="font-serif-elegant text-lg tracking-[0.4em] text-gray-400 mt-3 uppercase">Luévano Soto</p>
             </div>
 
-            <!-- CUENTA REGRESIVA -->
-            <div class="w-full max-w-sm mb-10 reveal">
-                <div class="text-center mb-6">
-                    <p class="text-[12px] font-bold uppercase tracking-[0.3em] text-[#b08d57]">Falta muy poco:</p>
+            <!-- Cuenta Regresiva -->
+            <div class="w-full max-w-sm mb-12 reveal">
+                <div id="countdown-container" class="flex justify-center gap-6">
+                    <div class="text-center"><span id="days" class="block font-serif-elegant text-2xl text-gray-800">00</span><span class="text-[9px] uppercase text-gray-400 tracking-widest">Días</span></div>
+                    <div class="text-center"><span id="hours" class="block font-serif-elegant text-2xl text-gray-800">00</span><span class="text-[9px] uppercase text-gray-400 tracking-widest">Horas</span></div>
+                    <div class="text-center"><span id="minutes" class="block font-serif-elegant text-2xl text-gray-800">00</span><span class="text-[9px] uppercase text-gray-400 tracking-widest">Min</span></div>
+                    <div class="text-center"><span id="seconds" class="block font-serif-elegant text-2xl text-gray-800">00</span><span class="text-[9px] uppercase text-gray-400 tracking-widest">Seg</span></div>
                 </div>
-                <div class="flex justify-center gap-4">
-                    <div class="countdown-box text-center min-w-[70px]">
-                        <span id="days" class="block font-serif-elegant text-2xl text-gray-800">00</span>
-                        <span class="text-[10px] uppercase text-gray-400">Días</span>
-                    </div>
-                    <div class="countdown-box text-center min-w-[70px]">
-                        <span id="hours" class="block font-serif-elegant text-2xl text-gray-800">00</span>
-                        <span class="text-[10px] uppercase text-gray-400">Horas</span>
-                    </div>
-                    <div class="countdown-box text-center min-w-[70px]">
-                        <span id="minutes" class="block font-serif-elegant text-2xl text-gray-800">00</span>
-                        <span class="text-[10px] uppercase text-gray-400">Min</span>
-                    </div>
-                    <div class="countdown-box text-center min-w-[70px]">
-                        <span id="seconds" class="block font-serif-elegant text-2xl text-gray-800">00</span>
-                        <span class="text-[10px] uppercase text-gray-400">Seg</span>
-                    </div>
+                <div id="event-message" class="hidden text-center py-4">
+                    <p class="font-serif-elegant text-2xl gold-shimmer tracking-widest uppercase">¡Hoy es el gran día!</p>
+                </div>
+                <div id="post-event-message" class="hidden text-center py-4">
+                    <p class="font-cursive text-4xl text-[#b08d57]">¡Gracias por acompañarnos!</p>
                 </div>
             </div>
 
             <section class="max-w-xs text-center mb-16 reveal">
-                <p class="font-classic italic text-gray-600 text-lg leading-relaxed px-2">
+                <p class="font-classic italic text-gray-600 text-lg leading-relaxed">
                     "Que Jesús te acompañe siempre en tu camino, Daniel Santiago."
                 </p>
                 <div class="w-16 h-[1px] bg-[#b08d57]/30 mx-auto mt-8"></div>
             </section>
 
-            <!-- BLOQUE DE FECHA RESTAURADO -->
+            <!-- Fecha -->
             <div class="w-full max-w-sm reveal mb-16">
                 <div class="text-center py-10 border-y border-[#e5e0d5]">
                     <div class="flex justify-around items-center">
                         <div class="text-right">
                             <p class="text-[13px] font-bold uppercase tracking-widest text-[#b08d57]">Junio</p>
-                            <p class="text-sm text-gray-400 uppercase">Sábado</p>
+                            <p class="text-xs text-gray-400 uppercase">Sábado</p>
                         </div>
                         <div class="text-6xl font-serif-elegant text-gray-800">06</div>
                         <div class="text-left">
                             <p class="text-[13px] font-bold uppercase tracking-widest text-[#b08d57]">2026</p>
-                            <p class="text-sm text-gray-400 uppercase">1:00 PM</p>
+                            <p class="text-xs text-gray-400 uppercase">1:00 PM</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Datos del Evento -->
-            <div class="w-full max-w-sm space-y-10 mb-16 reveal">
-                <div class="card text-center shadow-sm">
+            <!-- UBICACIONES -->
+            <div class="w-full max-w-sm space-y-6 mb-16 reveal">
+                <div class="card text-center">
                     <div class="flex justify-center mb-6 text-[#b08d57]">
-                        <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2v4M10 4h4" /><path d="M4 22h16" /><path d="M12 6L4 12v10h16V12L12 6z" /><path d="M10 22v-4a2 2 0 0 1 4 0v4" />
-                        </svg>
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M12 2v4M10 4h4" /><path d="M4 22h16" /><path d="M12 6L4 12v10h16V12L12 6z" /><path d="M10 22v-4a2 2 0 0 1 4 0v4" /></svg>
                     </div>
-                    <h4 class="font-serif-elegant text-[#b08d57] text-sm tracking-widest mb-4 uppercase">La Ceremonia</h4>
-                    <p class="font-bold text-gray-700 text-base">Parroquia de Nuestra Señora de los Dolores</p>
-                    <p class="text-[13px] text-gray-500 mt-3 italic leading-relaxed">Av. Convención 1914 poniente, Barrio de San Marcos</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes" target="_blank" class="mt-8 inline-block btn-gold">Ver Mapa</a>
+                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Ceremonia</h4>
+                    <p class="font-bold text-gray-700 text-base mb-2">Parroquia de Nuestra Señora de los Dolores</p>
+                    <p class="pulse-time text-lg mb-2">1:00 PM</p>
+                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">
+                        Av. Convención de 1914 Poniente 1914, Barrio de San Marcos, CP 20070, Aguascalientes, Ags.
+                    </p>
+                    <div class="map-container">
+                        <iframe src="https://maps.google.com/maps?q=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes" target="_blank" class="btn-maps">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                        Abrir Google Maps
+                    </a>
                 </div>
 
-                <div class="card text-center shadow-sm">
+                <div class="card text-center">
                     <div class="flex justify-center mb-6 text-[#b08d57]">
-                        <svg class="w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
                     </div>
-                    <h4 class="font-serif-elegant text-[#b08d57] text-sm tracking-widest mb-4 uppercase">La Recepción</h4>
-                    <p class="font-bold text-gray-700 text-base">Hotel Marriott Aguascalientes</p>
-                    <p class="text-[13px] text-gray-500 mt-3 italic leading-relaxed">Blvd. a Zacatecas 402, Las Trojes</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Marriott+Aguascalientes" target="_blank" class="mt-8 inline-block btn-gold">Ver Mapa</a>
+                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Recepción</h4>
+                    <p class="font-bold text-gray-700 text-base mb-2">Hotel Marriott Aguascalientes</p>
+                    <p class="pulse-time text-lg mb-2">3:00 PM</p>
+                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">
+                        Blvd. a Zacatecas 402, Las Trojes, CP 20115, Aguascalientes, Ags.
+                    </p>
+                    <div class="map-container">
+                        <iframe src="https://maps.google.com/maps?q=Hotel+Marriott+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Marriott+Aguascalientes" target="_blank" class="btn-maps">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                        Abrir Google Maps
+                    </a>
                 </div>
             </div>
 
-            <!-- RSVP -->
-            <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
-                <div class="bg-white rounded-[40px] p-12 shadow-2xl shadow-stone-200/50 border border-stone-100">
-                    <div class="text-center mb-10">
-                        <h3 class="text-3xl font-serif-elegant text-gray-800">Confirmación</h3>
-                        <p class="text-[10px] uppercase tracking-[0.3em] text-[#5a6e5a] font-bold mt-3">Favor de confirmar antes del 23 de Mayo</p>
+            <!-- REGALOS -->
+            <div class="w-full max-w-sm reveal">
+                <div class="card text-center bg-white/50">
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                            <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                        </svg>
                     </div>
-                    <div id="step-form" class="space-y-6">
-                        <input type="text" id="guestName" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-base outline-none" placeholder="Nombre o Familia">
-                        <select id="guestCount" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-base outline-none">
-                            <option value="1">1 Persona</option><option value="2">2 Personas</option><option value="3">3 Personas</option><option value="4">4 Personas</option><option value="5">5 Personas</option>
-                        </select>
-                        <button onclick="previewConfirmation()" class="w-full bg-[#5a6e5a] text-white font-bold py-5 rounded-2xl uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-green-900/10">Confirmar Asistencia</button>
-                    </div>
-                    <div id="step-preview" class="hidden space-y-8">
-                        <div class="bg-stone-50 p-8 rounded-3xl"><p id="previewText" class="text-base text-gray-600 italic text-center leading-relaxed"></p></div>
-                        <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-2xl uppercase text-[12px] tracking-widest flex items-center justify-center gap-3">Enviar WhatsApp</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PIE DE PÁGINA PROFESIONAL -->
-            <section class="professional-credits reveal">
-                <div class="text-center flex flex-col items-center gap-12 footer-logo-container">
-                    <div class="flex flex-col gap-4">
-                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Creative Design</p>
-                        <img src="imagen/lógico.png" alt="Alfredo Vázquez Logo" class="logo-alfredo">
-                    </div>
-                    <div class="flex flex-col gap-4" onclick="openFlayer()">
-                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Digital Studio</p>
-                        <img src="imagen/pixelar.png" alt="PixelAR" class="logo-pixelar">
-                    </div>
-                    <div class="flex flex-col gap-4" onclick="window.open('www.copymax.mx', '_blank')">
-                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Printing Partner</p>
-                        <img src="imagen/copymax.png" alt="Copy Max" class="logo-copymax">
-                    </div>
-                    <p class="text-[8px] uppercase tracking-[0.6em] text-gray-300 pt-8 border-t border-gray-100 w-full">
-                        Exclusivo para Daniel Santiago · 2026
+                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">Sugerencia de Regalos</h4>
+                    <p class="text-sm text-gray-600 italic leading-relaxed px-2">
+                        "Su presencia es el mejor regalo que me pueden presentar, pero si quieren contar con un detalle lo pueden dejar en la cajita que encontrarán en la recepción; lo que nazca de su corazón será bienvenido."
                     </p>
                 </div>
+            </div>
+
+            <!-- RSVP SECCIÓN MEMORIA -->
+            <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
+                <div class="bg-white rounded-[40px] p-12 shadow-2xl border border-stone-50">
+                    <!-- Estado de Éxito / Ya Confirmado -->
+                    <div id="rsvp-success-state" class="hidden text-center space-y-6">
+                        <div class="flex justify-center">
+                            <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 class="text-2xl font-serif-elegant text-gray-800">¡Ya confirmaste!</h3>
+                        <div class="bg-stone-50 p-6 rounded-2xl">
+                            <p id="confirmed-msg" class="text-base text-gray-600 italic leading-relaxed"></p>
+                        </div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">¡Te esperamos para celebrar!</p>
+                    </div>
+
+                    <!-- Formulario de Confirmación -->
+                    <div id="rsvp-form-state">
+                        <div class="text-center mb-10">
+                            <h3 class="text-3xl font-serif-elegant text-gray-800">Confirmación</h3>
+                            <p id="saving-msg" class="text-[10px] uppercase text-[#5a6e5a] font-bold mt-4 tracking-widest">Favor de confirmar antes del 23 de Mayo</p>
+                        </div>
+                        <div id="step-form" class="space-y-6">
+                            <input type="text" id="guestName" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-sm outline-none" placeholder="Nombre o Familia">
+                            <select id="guestCount" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-sm outline-none">
+                                <option value="1">1 Persona</option><option value="2">2 Personas</option><option value="3">3 Personas</option><option value="4">4 Personas</option><option value="5">5 Personas</option>
+                            </select>
+                            <button onclick="handleConfirm()" id="btn-confirm" class="w-full bg-[#5a6e5a] text-white font-bold py-5 rounded-2xl uppercase tracking-widest active:scale-95 transition-all shadow-md">Confirmar Asistencia</button>
+                        </div>
+                        <div id="step-preview" class="hidden space-y-8">
+                            <div class="bg-stone-50 p-8 rounded-3xl"><p id="previewText" class="text-sm text-gray-600 italic text-center"></p></div>
+                            <button onclick="sendToWhatsApp()" class="w-full bg-[#25D366] text-white font-bold py-5 rounded-2xl uppercase text-[12px] tracking-widest flex items-center justify-center gap-3">Enviar WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <div class="botanical-footer"></div>
+            <!-- Pie de Página -->
+            <section class="professional-credits reveal text-center w-full px-4">
+                <div class="flex flex-col items-center gap-10 footer-logo-container">
+                    <div class="footer-logo-item flex flex-col gap-3">
+                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Creative Design</p>
+                        <img src="imagen/lógico.png" alt="Alfredo Vázquez" loading="lazy">
+                    </div>
+                    <div class="footer-logo-item flex flex-col gap-3 cursor-pointer" onclick="openFlayer()">
+                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Digital Studio</p>
+                        <img src="imagen/pixelar.png" alt="PixelAR" loading="lazy">
+                    </div>
+                    <div class="footer-logo-item flex flex-col gap-3 cursor-pointer" onclick="window.open('https://www.copymax.mx/', '_blank')">
+                        <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Printing Partner</p>
+                        <img src="imagen/copymax.png" alt="Copy Max" loading="lazy">
+                    </div>
+                    <p class="text-[8px] uppercase tracking-[0.6em] text-gray-300 pt-10 border-t w-full border-gray-100">Exclusivo para Daniel Santiago · 2026</p>
+                </div>
+            </section>
+
+            <div class="w-full h-40 bg-[url('https://www.transparentpng.com/download/watercolor-leaves/watercolor-leaves-transparent-images-12.png')] bg-contain bg-no-repeat bg-bottom opacity-40 mt-[-20px]"></div>
         </div>
+    </div>
+
+    <!-- Modal Flyer -->
+    <div id="flayer-modal">
+        <button onclick="closeFlayer()" class="absolute top-6 right-6 text-white text-5xl font-light">&times;</button>
+        <div class="w-full max-w-sm max-h-[70vh] overflow-hidden rounded-3xl mb-10 border border-white/10">
+            <img src="imagen/flayer.png" alt="Flyer" class="w-full h-full object-contain" loading="lazy">
+        </div>
+        <button onclick="window.open('https://wa.me/524491920474?text=Hola%20Alfredo,%20me%20gustar%C3%ADa%20cotizar%20un%20servicio%20de%20dise%C3%B1o.', '_blank')" 
+           class="bg-[#25D366] text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl active:scale-95 transition-all">
+            Solicitar Cotización
+        </button>
     </div>
 
     <script>
         const audio = document.getElementById('bg-music');
         const audioBtn = document.getElementById('audio-btn');
-        const musicHint = document.getElementById('music-hint');
-        const scrollHint = document.getElementById('scroll-hint');
         const musicIcon = document.getElementById('music-icon');
         const muteIcon = document.getElementById('mute-icon');
+        const musicHint = document.getElementById('music-hint');
+        const envelope = document.getElementById('envelope-overlay');
+        const scrollHint = document.getElementById('scroll-hint');
         let isPlaying = false;
-        let userHasToggled = false;
+        let finalMessage = "";
+
+        // Al cargar, verificar si ya confirmó
+        function checkExistingRSVP() {
+            const stored = localStorage.getItem('confirmed_rsvp');
+            if (stored) {
+                const data = JSON.parse(stored);
+                document.getElementById('rsvp-form-state').classList.add('hidden');
+                document.getElementById('rsvp-success-state').classList.remove('hidden');
+                document.getElementById('confirmed-msg').innerText = `Gracias por confirmar, ${data.nombre}. Te esperamos con tus ${data.pases} pases.`;
+            }
+        }
+
+        function openInvitation() {
+            envelope.classList.add('opened');
+            audioBtn.classList.remove('hidden');
+            scrollHint.classList.remove('hidden');
+            musicHint.classList.remove('hidden');
+            audio.volume = 0.4;
+            audio.play().then(() => { 
+                isPlaying = true; 
+                audioBtn.classList.add('playing');
+                updateMusicHint();
+            }).catch(e => {});
+            setTimeout(reveal, 1200);
+        }
 
         function toggleMusic() {
-            userHasToggled = true;
-            hideMusicHint();
-            if (isPlaying) {
-                audio.pause();
-                audioBtn.classList.remove('playing');
-                musicIcon.classList.add('hidden');
-                muteIcon.classList.remove('hidden');
-            } else {
-                audio.play();
-                audioBtn.classList.add('playing');
-                musicIcon.classList.remove('hidden');
-                muteIcon.classList.add('hidden');
-            }
+            if (isPlaying) { audio.pause(); audioBtn.classList.remove('playing'); musicIcon.classList.add('hidden'); muteIcon.classList.remove('hidden'); }
+            else { audio.play(); audioBtn.classList.add('playing'); musicIcon.classList.remove('hidden'); muteIcon.classList.add('hidden'); }
             isPlaying = !isPlaying;
+            updateMusicHint();
         }
 
-        function hideMusicHint() {
-            if(musicHint) {
-                musicHint.style.opacity = '0';
-                musicHint.style.transform = 'translateY(-20px)';
-                setTimeout(() => musicHint.style.display = 'none', 500);
-            }
+        function updateMusicHint() {
+            if (isPlaying) musicHint.innerText = "Silenciar si gustas 🔇";
+            else musicHint.innerText = "Poner música 🎵";
         }
 
-        function startInteractions() {
-            if (!isPlaying && !userHasToggled) {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    audioBtn.classList.add('playing');
-                    hideMusicHint();
-                }).catch(err => console.log("Bloqueado"));
-            }
-            if(scrollHint) {
-                scrollHint.style.opacity = '0';
-                setTimeout(() => scrollHint.style.display = 'none', 800);
-            }
-            removeAutoPlayListeners();
+        async function handleConfirm() {
+            const nombre = document.getElementById('guestName').value.trim();
+            const cantidad = document.getElementById('guestCount').value;
+            const btn = document.getElementById('btn-confirm');
+            const msg = document.getElementById('saving-msg');
+            if (!nombre) { document.getElementById('guestName').style.border = "1px solid #b08d57"; return; }
+            try {
+                btn.disabled = true; btn.innerText = "GUARDANDO...";
+                if (window.saveRSVP) await window.saveRSVP({ nombre, pases: parseInt(cantidad) });
+                
+                // Guardar en memoria local
+                localStorage.setItem('confirmed_rsvp', JSON.stringify({ nombre, pases: cantidad }));
+
+                finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos!`;
+                document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
+                document.getElementById('step-form').classList.add('hidden');
+                document.getElementById('step-preview').classList.remove('hidden');
+                msg.innerText = "¡Confirmación guardada!";
+            } catch (error) { btn.disabled = false; btn.innerText = "REINTENTAR"; }
         }
 
-        function removeAutoPlayListeners() {
-            document.removeEventListener('click', startInteractions);
-            document.removeEventListener('touchstart', startInteractions);
-            window.removeEventListener('scroll', startInteractions);
-        }
+        function sendToWhatsApp() { window.open(`https://wa.me/5214498040411?text=${encodeURIComponent(finalMessage)}`, '_blank'); }
+        function openFlayer() { document.getElementById('flayer-modal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeFlayer() { document.getElementById('flayer-modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
 
-        document.addEventListener('click', startInteractions);
-        document.addEventListener('touchstart', startInteractions);
-        window.addEventListener('scroll', startInteractions);
-
-        function openFlayer() {
-            document.getElementById('flayer-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeFlayer() {
-            document.getElementById('flayer-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        function createSparkles() {
-            const container = document.getElementById('sparkles-container');
-            for (let i = 0; i < 20; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                const size = Math.random() * 4 + 2;
-                sparkle.style.width = `${size}px`;
-                sparkle.style.height = `${size}px`;
-                sparkle.style.left = `${Math.random() * 100}%`;
-                sparkle.style.top = `${Math.random() * 100}%`;
-                sparkle.style.setProperty('--duration', `${Math.random() * 4 + 3}s`);
-                sparkle.style.animationDelay = `${Math.random() * 5}s`;
-                container.appendChild(sparkle);
-            }
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(r => {
+                const windowHeight = window.innerHeight;
+                if (r.getBoundingClientRect().top < windowHeight - 100) r.classList.add("active");
+            });
         }
 
         const targetDate = new Date("June 6, 2026 13:00:00").getTime();
-        function updateCountdown() {
+        const endOfDay = new Date("June 7, 2026 00:00:00").getTime();
+
+        setInterval(() => {
             const now = new Date().getTime();
             const gap = targetDate - now;
-            const d = Math.floor(gap / (1000 * 60 * 60 * 24)), 
-                  h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), 
-                  m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60)), 
-                  s = Math.floor((gap % (1000 * 60)) / 1000);
-            
-            if(document.getElementById('days')) document.getElementById('days').innerText = d < 10 ? '0'+d : d;
-            if(document.getElementById('hours')) document.getElementById('hours').innerText = h < 10 ? '0'+h : h;
-            if(document.getElementById('minutes')) document.getElementById('minutes').innerText = m < 10 ? '0'+m : m;
-            if(document.getElementById('seconds')) document.getElementById('seconds').innerText = s < 10 ? '0'+s : s;
-        }
+            const contUI = document.getElementById('countdown-container');
+            const eventUI = document.getElementById('event-message');
+            const postUI = document.getElementById('post-event-message');
 
-        setInterval(updateCountdown, 1000);
-
-        function previewConfirmation() {
-            const nombre = document.getElementById('guestName').value.trim();
-            const cantidad = document.getElementById('guestCount').value;
-            if (!nombre) { document.getElementById('guestName').style.border = "1.5px solid #b08d57"; return; }
-            const finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos para celebrar con Daniel Santiago!`;
-            document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
-            document.getElementById('step-form').classList.add('hidden');
-            document.getElementById('step-preview').classList.remove('hidden');
-            window.lastMessage = finalMessage;
-        }
-
-        function sendToWhatsApp() {
-            window.open(`https://wa.me/5214498040411?text=${encodeURIComponent(window.lastMessage)}`, '_blank');
-        }
-
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
+            if (now > endOfDay) {
+                contUI.classList.add('hidden');
+                eventUI.classList.add('hidden');
+                postUI.classList.remove('hidden');
+                return;
             }
-        }
 
-        window.addEventListener("scroll", reveal);
-        window.onload = function() {
-            reveal();
-            createSparkles();
-            updateCountdown();
-        };
+            const today = new Date();
+            if (today.getDate() === 6 && today.getMonth() === 5 && today.getFullYear() === 2026) {
+                contUI.classList.add('hidden');
+                eventUI.classList.remove('hidden');
+                postUI.classList.add('hidden');
+                return;
+            }
+
+            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+            if(document.getElementById('days')) {
+                document.getElementById('days').innerText = Math.floor(gap / day);
+                document.getElementById('hours').innerText = Math.floor((gap % day) / hour);
+                document.getElementById('minutes').innerText = Math.floor((gap % hour) / minute);
+                document.getElementById('seconds').innerText = Math.floor((gap % minute) / second);
+            }
+        }, 1000);
+
+        window.addEventListener("scroll", () => { 
+            reveal(); 
+            if(scrollHint) scrollHint.style.opacity = '0'; 
+            if(musicHint) musicHint.style.opacity = '0';
+        });
+
+        window.onload = checkExistingRSVP;
     </script>
 </body>
 </html>
-
 
