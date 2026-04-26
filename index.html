@@ -1,11 +1,13 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Primera Comunión - Daniel Santiago</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="imagen/f.ico">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:italic,wght@400;700&display=swap" rel="stylesheet">
     
@@ -57,7 +59,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* SOBRE INICIAL CON SELLO REAL Y PERSONALIZACIÓN */
+        /* SOBRE INICIAL CON SELLO REAL */
         #envelope-overlay {
             position: fixed; inset: 0;
             background: var(--cream-bg);
@@ -75,7 +77,7 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35)) brightness(1.05);
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35));
             position: relative;
             animation: seal-pulse 2.5s infinite ease-in-out;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -118,7 +120,6 @@
             position: relative; padding-bottom: 50px; z-index: 1;
         }
 
-        /* Header Harmonized */
         .header-section {
             padding-top: 50px;
             display: flex;
@@ -157,15 +158,23 @@
         }
         .btn-gold-action:hover { background: var(--gold-accent); color: white; }
 
+        /* REPARACIÓN ANIMACIÓN SONIDO */
         #audio-btn {
             position: fixed; bottom: 25px; right: 25px; z-index: 100;
             width: 50px; height: 50px; background: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1.5px solid var(--gold-accent);
         }
-        .music-bar { width: 3px; background: var(--gold-accent); border-radius: 1px; height: 5px; }
+        .music-bar { width: 4px; background: var(--gold-accent); border-radius: 2px; height: 6px; margin: 0 1px; }
         #audio-btn.playing .music-bar { animation: musicBarHeight 0.8s infinite ease-in-out; }
-        @keyframes musicBarHeight { 0%, 100% { height: 6px; } 50% { height: 18px; } }
+        #audio-btn.playing .music-bar:nth-child(1) { animation-delay: 0.0s; }
+        #audio-btn.playing .music-bar:nth-child(2) { animation-delay: 0.2s; }
+        #audio-btn.playing .music-bar:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes musicBarHeight { 
+            0%, 100% { height: 6px; } 
+            50% { height: 20px; } 
+        }
 
         #music-hint {
             position: fixed; bottom: 85px; right: 25px;
@@ -208,7 +217,7 @@
 </head>
 <body>
 
-    <!-- Pantalla de Inicio (Sobre con Sello Real y Saludo Personal) -->
+    <!-- Pantalla de Inicio -->
     <div id="envelope-overlay">
         <div class="text-center mb-10 reveal active">
             <p id="guest-greeting" class="font-serif-elegant text-gray-400 tracking-[0.3em] uppercase text-[10px] mb-4">Tienes una invitación de</p>
@@ -278,7 +287,7 @@
                 <div class="w-16 h-[1px] bg-[#b08d57]/30 mx-auto mt-8"></div>
             </section>
 
-            <!-- Fecha con Botón de Calendario -->
+            <!-- Fecha con Calendario -->
             <div class="w-full max-w-sm reveal mb-16">
                 <div class="text-center py-10 border-y border-[#e5e0d5]">
                     <div class="flex justify-around items-center mb-6">
@@ -293,7 +302,6 @@
                         </div>
                     </div>
                     <button onclick="addToCalendar()" class="btn-gold-action">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         Agendar Evento
                     </button>
                 </div>
@@ -305,7 +313,7 @@
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Ceremonia</h4>
                     <p class="font-bold text-gray-700 text-base mb-2">Parroquia de Nuestra Señora de los Dolores</p>
                     <p class="pulse-time text-lg mb-2">1:00 PM</p>
-                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">Av. Convención de 1914 Poniente 1914, Barrio de San Marcos, CP 20070.</p>
+                    <p class="text-xs text-gray-500 mb-4 px-4">Av. Convención de 1914 Poniente 1914, Barrio de San Marcos, CP 20070.</p>
                     <div class="map-container">
                         <iframe src="https://maps.google.com/maps?q=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
                     </div>
@@ -316,7 +324,7 @@
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Recepción</h4>
                     <p class="font-bold text-gray-700 text-base mb-2">Hotel Marriott Aguascalientes</p>
                     <p class="pulse-time text-lg mb-2">3:00 PM</p>
-                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">Blvd. a Zacatecas 402, Las Trojes, CP 20115.</p>
+                    <p class="text-xs text-gray-500 mb-4 px-4">Blvd. a Zacatecas 402, Las Trojes, CP 20115.</p>
                     <div class="map-container">
                         <iframe src="https://maps.google.com/maps?q=Hotel+Marriott+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
                     </div>
@@ -324,40 +332,29 @@
                 </div>
             </div>
 
-            <!-- CÓDIGO DE VESTIMENTA Y REGALOS -->
+            <!-- VESTIMENTA Y REGALOS -->
             <div class="w-full max-w-sm space-y-6 mb-16 reveal">
                 <div class="card text-center bg-white">
-                    <div class="flex justify-center mb-4 text-[#b08d57]">
-                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" /></svg>
-                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-2 uppercase">Código de Vestimenta</h4>
                     <p class="text-lg font-bold text-gray-800">Formal</p>
                     <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest">¡Luce tu mejor gala!</p>
                 </div>
-
                 <div class="card text-center bg-white/50">
-                    <div class="flex justify-center mb-6 text-[#b08d57]">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></svg>
-                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">Sugerencia de Regalos</h4>
-                    <p class="text-sm text-gray-600 italic leading-relaxed">"Su presencia es el mejor regalo, pero si desean tener un detalle, lo pueden dejar en la cajita en la recepción. Lo que nazca de su corazón será bienvenido."</p>
+                    <p class="text-sm text-gray-600 italic px-2">"Su presencia es el mejor regalo, pero si desean tener un detalle, lo pueden dejar en la cajita en la recepción. Lo que nazca de su corazón será bienvenido."</p>
                 </div>
             </div>
 
-            <!-- RSVP SECCIÓN MEMORIA INTELIGENTE -->
+            <!-- RSVP -->
             <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
                 <div class="bg-white rounded-[40px] p-12 shadow-2xl border border-stone-50">
                     <div id="rsvp-success-state" class="hidden text-center space-y-6">
-                        <div class="flex justify-center"><svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
                         <h3 class="text-2xl font-serif-elegant text-gray-800">¡Confirmado!</h3>
                         <div class="bg-stone-50 p-6 rounded-2xl"><p id="confirmed-msg" class="text-base text-gray-600 italic"></p></div>
-                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">¡Nos vemos pronto!</p>
                     </div>
-
                     <div id="rsvp-form-state">
                         <div class="text-center mb-10">
                             <h3 class="text-3xl font-serif-elegant text-gray-800">Confirmación</h3>
-                            <p id="saving-msg" class="text-[10px] uppercase text-[#5a6e5a] font-bold mt-4 tracking-widest">Confirma antes del 23 de Mayo</p>
                         </div>
                         <div id="step-form" class="space-y-6">
                             <input type="text" id="guestName" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-sm outline-none" placeholder="Nombre o Familia">
@@ -389,7 +386,6 @@
                         <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Printing Partner</p>
                         <img src="imagen/copymax.png" alt="Copy Max">
                     </div>
-                    <p class="text-[8px] uppercase tracking-[0.6em] text-gray-300 pt-10 border-t w-full border-gray-100">Exclusivo para Daniel Santiago · 2026</p>
                 </div>
             </section>
 
@@ -400,8 +396,8 @@
     <!-- Modal Flyer -->
     <div id="flayer-modal">
         <button onclick="closeFlayer()" class="absolute top-6 right-6 text-white text-5xl font-light">&times;</button>
-        <div class="w-full max-w-sm max-h-[70vh] overflow-hidden rounded-3xl mb-10 border border-white/10">
-            <img src="imagen/flayer.png" alt="Flyer" class="w-full h-full object-contain" loading="lazy">
+        <div class="w-full max-w-sm max-h-[70vh] overflow-hidden rounded-3xl mb-10">
+            <img src="imagen/flayer.png" alt="Flyer" class="w-full h-full object-contain">
         </div>
         <button onclick="window.open('https://wa.me/524491920474?text=Hola%20Alfredo,%20me%20gustar%C3%ADa%20cotizar%20un%20servicio%20de%20dise%C3%B1o.', '_blank')" 
            class="bg-[#25D366] text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl active:scale-95 transition-all">Solicitar Cotización</button>
@@ -416,16 +412,12 @@
         let isPlaying = false;
         let finalMessage = "";
 
-        // Verificación de saludo personalizado por URL (?n=Familia+Perez)
         function checkURLGreeting() {
             const params = new URLSearchParams(window.location.search);
             const name = params.get('n');
-            if (name) {
-                document.getElementById('guest-greeting').innerText = `Invitación para: ${name}`;
-            }
+            if (name) document.getElementById('guest-greeting').innerText = `Invitación para: ${name}`;
         }
 
-        // Verificación de Memoria Inteligente
         function checkExistingRSVP() {
             const stored = localStorage.getItem('confirmed_rsvp_daniel');
             if (stored) {
@@ -447,9 +439,10 @@
         }
 
         function toggleMusic() {
-            if (isPlaying) { audio.pause(); audioBtn.classList.remove('playing'); }
-            else { audio.play(); audioBtn.classList.add('playing'); }
+            if (isPlaying) audio.pause();
+            else audio.play();
             isPlaying = !isPlaying;
+            audioBtn.classList.toggle('playing', isPlaying);
             updateMusicHint();
         }
 
@@ -462,7 +455,6 @@
             const nombre = document.getElementById('guestName').value.trim();
             const cantidad = document.getElementById('guestCount').value;
             const btn = document.getElementById('btn-confirm');
-            const msg = document.getElementById('saving-msg');
             if (!nombre) { document.getElementById('guestName').style.border = "1.5px solid #b08d57"; return; }
             try {
                 btn.disabled = true; btn.innerText = "GUARDANDO...";
@@ -472,14 +464,11 @@
                 document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
                 document.getElementById('step-form').classList.add('hidden');
                 document.getElementById('step-preview').classList.remove('hidden');
-                msg.innerText = "¡Confirmación guardada!";
             } catch (error) { btn.disabled = false; btn.innerText = "REINTENTAR"; }
         }
 
         function addToCalendar() {
-            const details = encodeURIComponent("Primera Comunión de Daniel Santiago Luévano Soto");
-            const location = encodeURIComponent("Parroquia de Nuestra Señora de los Dolores, Aguascalientes");
-            const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${details}&dates=20260606T130000Z/20260606T200000Z&details=Acompáñanos+a+celebrar+este+día+especial.&location=${location}&sf=true&output=xml`;
+            const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=Comunión+Daniel+Santiago&dates=20260606T130000Z/20260606T200000Z&details=Acompáñanos+a+celebrar.&location=Parroquia+de+Nuestra+Señora+de+los+Dolores,+Aguascalientes&sf=true&output=xml`;
             window.open(url, '_blank');
         }
 
@@ -495,35 +484,52 @@
             });
         }
 
-        const targetDate = new Date("June 6, 2026 13:00:00").getTime();
-        const endOfDay = new Date("June 7, 2026 00:00:00").getTime();
+        // Lógica del Temporizador Reparada
+        const targetDate = new Date(2026, 5, 6, 13, 0, 0).getTime(); // Junio es mes 5 (0-11)
+        const endOfDay = new Date(2026, 5, 7, 0, 0, 0).getTime();
 
-        setInterval(() => {
+        function updateTimer() {
             const now = new Date().getTime();
             const gap = targetDate - now;
+            
             const contUI = document.getElementById('countdown-container');
             const eventUI = document.getElementById('event-message');
             const postUI = document.getElementById('post-event-message');
 
+            // Caso 1: Pasado el evento (Día siguiente)
             if (now > endOfDay) {
-                contUI.classList.add('hidden'); eventUI.classList.add('hidden'); postUI.classList.remove('hidden');
+                if(contUI) contUI.classList.add('hidden');
+                if(eventUI) eventUI.classList.add('hidden');
+                if(postUI) postUI.classList.remove('hidden');
                 return;
             }
 
+            // Caso 2: Es hoy (6 de Junio de 2026)
             const today = new Date();
-            if (today.getDate() === 6 && today.getMonth() === 5 && today.getFullYear() === 2026) {
-                contUI.classList.add('hidden'); eventUI.classList.remove('hidden'); postUI.classList.add('hidden');
+            if (today.getFullYear() === 2026 && today.getMonth() === 5 && today.getDate() === 6) {
+                if(contUI) contUI.classList.add('hidden');
+                if(eventUI) eventUI.classList.remove('hidden');
+                if(postUI) postUI.classList.add('hidden');
                 return;
             }
 
-            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
-            if(document.getElementById('days')) {
-                document.getElementById('days').innerText = Math.floor(gap / day);
-                document.getElementById('hours').innerText = Math.floor((gap % day) / hour);
-                document.getElementById('minutes').innerText = Math.floor((gap % hour) / minute);
-                document.getElementById('seconds').innerText = Math.floor((gap % minute) / second);
+            // Caso 3: Cuenta regresiva normal
+            if (gap > 0) {
+                const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+                const d = Math.floor(gap / day);
+                const h = Math.floor((gap % day) / hour);
+                const m = Math.floor((gap % hour) / minute);
+                const s = Math.floor((gap % minute) / second);
+
+                document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+                document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+                document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+                document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
             }
-        }, 1000);
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer(); // Llamar una vez al cargar
 
         window.addEventListener("scroll", () => { 
             reveal(); 
@@ -531,12 +537,10 @@
             if(musicHint) musicHint.style.opacity = '0';
         });
 
-        window.onload = () => {
-            checkURLGreeting();
-            checkExistingRSVP();
-        };
+        window.onload = () => { checkURLGreeting(); checkExistingRSVP(); };
     </script>
 </body>
 </html>
+
 
 
