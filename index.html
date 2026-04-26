@@ -140,6 +140,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
 
+        /* Logos pie de página (76px = aprox 2cm) */
         .footer-logo-container {
             filter: grayscale(100%);
             opacity: 0.4;
@@ -151,7 +152,7 @@
         }
 
         .logo-alfredo, .logo-pixelar, .logo-copymax {
-            width: 76px; /* 2cm aprox */
+            width: 76px;
             height: auto;
             margin: 0 auto;
             display: block;
@@ -206,7 +207,7 @@
             50% { height: 18px; }
         }
 
-        /* BURBUJA DE MÚSICA - Texto blanco sobre fondo dorado */
+        /* BURBUJA DE MÚSICA - Texto blanco sobre dorado */
         #music-hint {
             position: fixed;
             bottom: 85px;
@@ -238,7 +239,7 @@
             50% { transform: translateY(-5px) scale(1.05); }
         }
 
-        /* INDICADOR DE SCROLL (MANITA) - Sólida y grande */
+        /* INDICADOR DE SCROLL (MANITA) - Grande y Sólida */
         #scroll-hint {
             position: fixed;
             top: 55%;
@@ -249,12 +250,12 @@
             flex-direction: column;
             align-items: center;
             pointer-events: none;
-            opacity: 1; /* Sin transparencia como pediste */
+            opacity: 1; 
             transition: opacity 0.8s ease;
             filter: grayscale(100%);
         }
         .scroll-icon {
-            width: 150px; /* Tamaño grande */
+            width: 150px;
             height: auto;
             animation: scrollJump 2.2s infinite ease-in-out;
         }
@@ -291,7 +292,7 @@
 
     <!-- Indicador de Scroll -->
     <div id="scroll-hint">
-        <img src="imagen/scroll.png" alt="Desliza para ver más" class="scroll-icon">
+        <img src="imagen/scroll.png" alt="Desliza" class="scroll-icon">
     </div>
 
     <!-- Burbuja de Música -->
@@ -301,7 +302,7 @@
     <div id="flayer-modal">
         <button onclick="closeFlayer()" class="absolute top-6 right-6 text-white text-6xl font-light outline-none">&times;</button>
         <div class="w-full max-w-md max-h-[70vh] overflow-hidden rounded-3xl shadow-2xl mb-10 border border-white/10">
-            <img src="imagen/flayer.png" alt="PixelAR Flyer" class="w-full h-full object-contain">
+            <img src="imagen/flayer.png" alt="PixelAR Flayer" class="w-full h-full object-contain">
         </div>
         <button onclick="window.open('https://wa.me/524491920474?text=Hola%20Alfredo,%20me%20gustar%C3%ADa%20cotizar%20un%20servicio%20de%20dise%C3%B1o%20visto%20en%20la%20invitaci%C3%B3n%20de%20Daniel.', '_blank')" 
            class="bg-[#25D366] text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl flex items-center gap-3 active:scale-95 transition-all">
@@ -380,6 +381,23 @@
                 <div class="w-16 h-[1px] bg-[#b08d57]/30 mx-auto mt-8"></div>
             </section>
 
+            <!-- BLOQUE DE FECHA RESTAURADO -->
+            <div class="w-full max-w-sm reveal mb-16">
+                <div class="text-center py-10 border-y border-[#e5e0d5]">
+                    <div class="flex justify-around items-center">
+                        <div class="text-right">
+                            <p class="text-[13px] font-bold uppercase tracking-widest text-[#b08d57]">Junio</p>
+                            <p class="text-sm text-gray-400 uppercase">Sábado</p>
+                        </div>
+                        <div class="text-6xl font-serif-elegant text-gray-800">06</div>
+                        <div class="text-left">
+                            <p class="text-[13px] font-bold uppercase tracking-widest text-[#b08d57]">2026</p>
+                            <p class="text-sm text-gray-400 uppercase">1:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Datos del Evento -->
             <div class="w-full max-w-sm space-y-10 mb-16 reveal">
                 <div class="card text-center shadow-sm">
@@ -437,11 +455,11 @@
                         <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Digital Studio</p>
                         <img src="imagen/pixelar.png" alt="PixelAR" class="logo-pixelar">
                     </div>
-                    <div class="flex flex-col gap-4" onclick="window.open('. ', '_blank')">
+                    <div class="flex flex-col gap-4" onclick="window.open('www.copymax.mx', '_blank')">
                         <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400 font-semibold">Printing Partner</p>
                         <img src="imagen/copymax.png" alt="Copy Max" class="logo-copymax">
                     </div>
-                    <p class="text-[8px] uppercase tracking-[0.6em] text-gray-150 pt-8 border-t border-gray-100 w-full">
+                    <p class="text-[8px] uppercase tracking-[0.6em] text-gray-300 pt-8 border-t border-gray-100 w-full">
                         Exclusivo para Daniel Santiago · 2026
                     </p>
                 </div>
@@ -588,5 +606,4 @@
 </body>
 </html>
 
-```
 
