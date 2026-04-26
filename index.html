@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,7 +57,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* SOBRE INICIAL CON SELLO REAL */
+        /* SOBRE INICIAL CON SELLO REAL Y PERSONALIZACIÓN */
         #envelope-overlay {
             position: fixed; inset: 0;
             background: var(--cream-bg);
@@ -79,11 +80,9 @@
             animation: seal-pulse 2.5s infinite ease-in-out;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .wax-seal:active { transform: scale(0.9); }
-
         @keyframes seal-pulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25)) brightness(1.05); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 20px 35px rgba(0,0,0,0.4)) brightness(1.15); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.25)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 20px 35px rgba(0,0,0,0.4)); }
         }
 
         /* EFECTO DORADO Y TINTINEO */
@@ -96,7 +95,6 @@
             -webkit-text-fill-color: transparent;
             animation: shimmer 2s linear infinite;
         }
-
         @keyframes shimmer { to { background-position: 200% center; } }
 
         .pulse-time {
@@ -116,15 +114,13 @@
         .watercolor-canvas {
             background-color: var(--cream-bg);
             background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-            min-height: 100vh;
-            width: 100%;
-            position: relative;
-            padding-bottom: 50px;
-            z-index: 1;
+            min-height: 100vh; width: 100%;
+            position: relative; padding-bottom: 50px; z-index: 1;
         }
 
+        /* Header Harmonized */
         .header-section {
-            padding-top: 40px;
+            padding-top: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -134,76 +130,47 @@
             width: 85%;
             max-width: 300px;
             border-radius: 150px 150px 20px 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            border: 6px solid white;
-            margin: 30px auto 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            border: 8px solid white;
+            margin: 40px auto;
             overflow: hidden;
             background: #fff;
             animation: float 6s ease-in-out infinite;
         }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .card {
-            background: white;
-            border-radius: 40px;
-            padding: 40px 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
-            border: 1px solid rgba(0,0,0,0.02);
-            margin-bottom: 30px;
+            background: white; border-radius: 40px;
+            padding: 40px 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.02); margin-bottom: 30px;
         }
 
-        .map-container {
-            width: 100%;
-            height: 180px;
-            border-radius: 25px;
-            overflow: hidden;
-            margin: 20px 0;
-            border: 1px solid #f0f0f0;
-            background-color: #eee;
+        .btn-gold-action {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: transparent; color: var(--gold-accent);
+            border: 1.5px solid var(--gold-accent); border-radius: 50px;
+            padding: 12px 28px; font-size: 11px; text-transform: uppercase;
+            letter-spacing: 2px; font-weight: 700; transition: all 0.3s;
         }
-
-        .btn-maps {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: transparent;
-            color: var(--gold-accent);
-            border: 1.5px solid var(--gold-accent);
-            border-radius: 50px;
-            padding: 12px 28px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            transition: all 0.3s;
-            margin-top: 15px;
-        }
-        .btn-maps:hover { background: var(--gold-accent); color: white; }
+        .btn-gold-action:hover { background: var(--gold-accent); color: white; }
 
         #audio-btn {
-            position: fixed; bottom: 25px; right: 25px;
-            z-index: 100; width: 50px; height: 50px;
-            background: white; border-radius: 50%;
+            position: fixed; bottom: 25px; right: 25px; z-index: 100;
+            width: 50px; height: 50px; background: white; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1.5px solid var(--gold-accent);
-            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1.5px solid var(--gold-accent);
         }
         .music-bar { width: 3px; background: var(--gold-accent); border-radius: 1px; height: 5px; }
         #audio-btn.playing .music-bar { animation: musicBarHeight 0.8s infinite ease-in-out; }
-        #audio-btn.playing .music-bar:nth-child(1) { animation-delay: 0s; }
-        #audio-btn.playing .music-bar:nth-child(2) { animation-delay: 0.2s; }
-        #audio-btn.playing .music-bar:nth-child(3) { animation-delay: 0.4s; }
         @keyframes musicBarHeight { 0%, 100% { height: 6px; } 50% { height: 18px; } }
 
         #music-hint {
             position: fixed; bottom: 85px; right: 25px;
             background: var(--gold-accent); color: white;
-            padding: 8px 15px; border-radius: 20px;
-            font-size: 11px; font-weight: 600;
+            padding: 8px 15px; border-radius: 20px; font-size: 11px;
             white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             animation: pulseHint 2.5s infinite ease-in-out;
             z-index: 101; transition: opacity 0.5s ease;
@@ -215,8 +182,7 @@
         }
 
         #scroll-hint {
-            position: fixed; top: 60%; left: 50%;
-            transform: translate(-50%, -50%);
+            position: fixed; top: 60%; left: 50%; transform: translate(-50%, -50%);
             z-index: 200; pointer-events: none;
         }
         .scroll-icon { width: 120px; animation: scrollJump 2.2s infinite ease-in-out; filter: grayscale(1); }
@@ -226,31 +192,26 @@
             100% { transform: translateY(-50px); opacity: 0; }
         }
 
-        /* Footer logos con efecto color */
         .footer-logo-item img {
             width: 76px; height: auto; margin: 0 auto; display: block;
             filter: grayscale(100%); transition: all 0.4s ease;
         }
-        .footer-logo-item:hover img {
-            filter: grayscale(0%);
-            transform: scale(1.1);
-        }
+        .footer-logo-item:hover img { filter: grayscale(0%); transform: scale(1.1); }
 
         #flayer-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 600; display: none; flex-direction: column;
-            align-items: center; justify-content: center; padding: 20px;
-            backdrop-filter: blur(10px);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 600;
+            display: none; flex-direction: column; align-items: center;
+            justify-content: center; padding: 20px; backdrop-filter: blur(10px);
         }
         #flayer-modal.active { display: flex; }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de Inicio -->
+    <!-- Pantalla de Inicio (Sobre con Sello Real y Saludo Personal) -->
     <div id="envelope-overlay">
         <div class="text-center mb-10 reveal active">
-            <p class="font-serif-elegant text-gray-400 tracking-[0.3em] uppercase text-[10px] mb-4">Tienes una invitación de</p>
+            <p id="guest-greeting" class="font-serif-elegant text-gray-400 tracking-[0.3em] uppercase text-[10px] mb-4">Tienes una invitación de</p>
             <h2 class="font-cursive text-5xl text-gray-800">Daniel Santiago</h2>
         </div>
         <div class="wax-seal" onclick="openInvitation()"></div>
@@ -279,10 +240,9 @@
 
         <div class="relative z-10 flex flex-col items-center px-6 mt-[-60px]">
             
-            <!-- Encabezado Armonizado -->
             <div class="header-section text-center mb-2 reveal">
-                <img src="imagen/copa.png" alt="Copa" class="w-20 mx-auto mb-4 drop-shadow-md" loading="lazy">
-                <p class="font-cursive text-5xl text-[#b08d57] mb-1">Mi Primera</p>
+                <img src="imagen/copa.png" alt="Copa" class="w-20 mx-auto mb-6 drop-shadow-md" loading="lazy">
+                <p class="font-cursive text-5xl text-[#b08d57] mb-2 leading-none">Mi Primera</p>
                 <p class="font-serif-elegant text-3xl tracking-[0.2em] text-gray-700 uppercase">Comunión</p>
             </div>
 
@@ -318,10 +278,10 @@
                 <div class="w-16 h-[1px] bg-[#b08d57]/30 mx-auto mt-8"></div>
             </section>
 
-            <!-- Fecha -->
+            <!-- Fecha con Botón de Calendario -->
             <div class="w-full max-w-sm reveal mb-16">
                 <div class="text-center py-10 border-y border-[#e5e0d5]">
-                    <div class="flex justify-around items-center">
+                    <div class="flex justify-around items-center mb-6">
                         <div class="text-right">
                             <p class="text-[13px] font-bold uppercase tracking-widest text-[#b08d57]">Junio</p>
                             <p class="text-xs text-gray-400 uppercase">Sábado</p>
@@ -332,85 +292,72 @@
                             <p class="text-xs text-gray-400 uppercase">1:00 PM</p>
                         </div>
                     </div>
+                    <button onclick="addToCalendar()" class="btn-gold-action">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        Agendar Evento
+                    </button>
                 </div>
             </div>
 
             <!-- UBICACIONES -->
             <div class="w-full max-w-sm space-y-6 mb-16 reveal">
                 <div class="card text-center">
-                    <div class="flex justify-center mb-6 text-[#b08d57]">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M12 2v4M10 4h4" /><path d="M4 22h16" /><path d="M12 6L4 12v10h16V12L12 6z" /><path d="M10 22v-4a2 2 0 0 1 4 0v4" /></svg>
-                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Ceremonia</h4>
                     <p class="font-bold text-gray-700 text-base mb-2">Parroquia de Nuestra Señora de los Dolores</p>
                     <p class="pulse-time text-lg mb-2">1:00 PM</p>
-                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">
-                        Av. Convención de 1914 Poniente 1914, Barrio de San Marcos, CP 20070, Aguascalientes, Ags.
-                    </p>
+                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">Av. Convención de 1914 Poniente 1914, Barrio de San Marcos, CP 20070.</p>
                     <div class="map-container">
-                        <iframe src="https://maps.google.com/maps?q=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe src="https://maps.google.com/maps?q=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
                     </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes" target="_blank" class="btn-maps">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/></svg>
-                        Abrir Google Maps
-                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Parroquia+de+Nuestra+Señora+de+los+Dolores+Aguascalientes" target="_blank" class="btn-gold-action">Ver en Maps</a>
                 </div>
 
                 <div class="card text-center">
-                    <div class="flex justify-center mb-6 text-[#b08d57]">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
-                    </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">La Recepción</h4>
                     <p class="font-bold text-gray-700 text-base mb-2">Hotel Marriott Aguascalientes</p>
                     <p class="pulse-time text-lg mb-2">3:00 PM</p>
-                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">
-                        Blvd. a Zacatecas 402, Las Trojes, CP 20115, Aguascalientes, Ags.
-                    </p>
+                    <p class="text-xs text-gray-500 mb-4 leading-relaxed px-4">Blvd. a Zacatecas 402, Las Trojes, CP 20115.</p>
                     <div class="map-container">
-                        <iframe src="https://maps.google.com/maps?q=Hotel+Marriott+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe src="https://maps.google.com/maps?q=Hotel+Marriott+Aguascalientes&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
                     </div>
-                    <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Marriott+Aguascalientes" target="_blank" class="btn-maps">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/></svg>
-                        Abrir Google Maps
-                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Marriott+Aguascalientes" target="_blank" class="btn-gold-action">Ver en Maps</a>
                 </div>
             </div>
 
-            <!-- REGALOS -->
-            <div class="w-full max-w-sm reveal">
+            <!-- CÓDIGO DE VESTIMENTA Y REGALOS -->
+            <div class="w-full max-w-sm space-y-6 mb-16 reveal">
+                <div class="card text-center bg-white">
+                    <div class="flex justify-center mb-4 text-[#b08d57]">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" /></svg>
+                    </div>
+                    <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-2 uppercase">Código de Vestimenta</h4>
+                    <p class="text-lg font-bold text-gray-800">Formal</p>
+                    <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest">¡Luce tu mejor gala!</p>
+                </div>
+
                 <div class="card text-center bg-white/50">
                     <div class="flex justify-center mb-6 text-[#b08d57]">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
-                            <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-                        </svg>
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" /></svg>
                     </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-4 uppercase">Sugerencia de Regalos</h4>
-                    <p class="text-sm text-gray-600 italic leading-relaxed px-2">
-                        "Su presencia es el mejor regalo que me pueden presentar, pero si quieren contar con un detalle lo pueden dejar en la cajita que encontrarán en la recepción; lo que nazca de su corazón será bienvenido."
-                    </p>
+                    <p class="text-sm text-gray-600 italic leading-relaxed">"Su presencia es el mejor regalo, pero si desean tener un detalle, lo pueden dejar en la cajita en la recepción. Lo que nazca de su corazón será bienvenido."</p>
                 </div>
             </div>
 
-            <!-- RSVP SECCIÓN MEMORIA -->
+            <!-- RSVP SECCIÓN MEMORIA INTELIGENTE -->
             <section id="rsvp-section" class="w-full max-w-sm mb-12 reveal">
                 <div class="bg-white rounded-[40px] p-12 shadow-2xl border border-stone-50">
-                    <!-- Estado de Éxito / Ya Confirmado -->
                     <div id="rsvp-success-state" class="hidden text-center space-y-6">
-                        <div class="flex justify-center">
-                            <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <h3 class="text-2xl font-serif-elegant text-gray-800">¡Ya confirmaste!</h3>
-                        <div class="bg-stone-50 p-6 rounded-2xl">
-                            <p id="confirmed-msg" class="text-base text-gray-600 italic leading-relaxed"></p>
-                        </div>
-                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">¡Te esperamos para celebrar!</p>
+                        <div class="flex justify-center"><svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <h3 class="text-2xl font-serif-elegant text-gray-800">¡Confirmado!</h3>
+                        <div class="bg-stone-50 p-6 rounded-2xl"><p id="confirmed-msg" class="text-base text-gray-600 italic"></p></div>
+                        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">¡Nos vemos pronto!</p>
                     </div>
 
-                    <!-- Formulario de Confirmación -->
                     <div id="rsvp-form-state">
                         <div class="text-center mb-10">
                             <h3 class="text-3xl font-serif-elegant text-gray-800">Confirmación</h3>
-                            <p id="saving-msg" class="text-[10px] uppercase text-[#5a6e5a] font-bold mt-4 tracking-widest">Favor de confirmar antes del 23 de Mayo</p>
+                            <p id="saving-msg" class="text-[10px] uppercase text-[#5a6e5a] font-bold mt-4 tracking-widest">Confirma antes del 23 de Mayo</p>
                         </div>
                         <div id="step-form" class="space-y-6">
                             <input type="text" id="guestName" class="w-full p-5 bg-stone-50 border-none rounded-2xl text-sm outline-none" placeholder="Nombre o Familia">
@@ -428,19 +375,19 @@
             </section>
 
             <!-- Pie de Página -->
-            <section class="professional-credits reveal text-center w-full px-4">
-                <div class="flex flex-col items-center gap-10 footer-logo-container">
+            <section class="professional-credits reveal text-center w-full pb-10">
+                <div class="flex flex-col items-center gap-10">
                     <div class="footer-logo-item flex flex-col gap-3">
                         <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Creative Design</p>
-                        <img src="imagen/lógico.png" alt="Alfredo Vázquez" loading="lazy">
+                        <img src="imagen/lógico.png" alt="Alfredo">
                     </div>
                     <div class="footer-logo-item flex flex-col gap-3 cursor-pointer" onclick="openFlayer()">
                         <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Digital Studio</p>
-                        <img src="imagen/pixelar.png" alt="PixelAR" loading="lazy">
+                        <img src="imagen/pixelar.png" alt="PixelAR">
                     </div>
                     <div class="footer-logo-item flex flex-col gap-3 cursor-pointer" onclick="window.open('https://www.copymax.mx/', '_blank')">
                         <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Printing Partner</p>
-                        <img src="imagen/copymax.png" alt="Copy Max" loading="lazy">
+                        <img src="imagen/copymax.png" alt="Copy Max">
                     </div>
                     <p class="text-[8px] uppercase tracking-[0.6em] text-gray-300 pt-10 border-t w-full border-gray-100">Exclusivo para Daniel Santiago · 2026</p>
                 </div>
@@ -457,30 +404,35 @@
             <img src="imagen/flayer.png" alt="Flyer" class="w-full h-full object-contain" loading="lazy">
         </div>
         <button onclick="window.open('https://wa.me/524491920474?text=Hola%20Alfredo,%20me%20gustar%C3%ADa%20cotizar%20un%20servicio%20de%20dise%C3%B1o.', '_blank')" 
-           class="bg-[#25D366] text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl active:scale-95 transition-all">
-            Solicitar Cotización
-        </button>
+           class="bg-[#25D366] text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs shadow-xl active:scale-95 transition-all">Solicitar Cotización</button>
     </div>
 
     <script>
         const audio = document.getElementById('bg-music');
         const audioBtn = document.getElementById('audio-btn');
-        const musicIcon = document.getElementById('music-icon');
-        const muteIcon = document.getElementById('mute-icon');
         const musicHint = document.getElementById('music-hint');
         const envelope = document.getElementById('envelope-overlay');
         const scrollHint = document.getElementById('scroll-hint');
         let isPlaying = false;
         let finalMessage = "";
 
-        // Al cargar, verificar si ya confirmó
+        // Verificación de saludo personalizado por URL (?n=Familia+Perez)
+        function checkURLGreeting() {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('n');
+            if (name) {
+                document.getElementById('guest-greeting').innerText = `Invitación para: ${name}`;
+            }
+        }
+
+        // Verificación de Memoria Inteligente
         function checkExistingRSVP() {
-            const stored = localStorage.getItem('confirmed_rsvp');
+            const stored = localStorage.getItem('confirmed_rsvp_daniel');
             if (stored) {
                 const data = JSON.parse(stored);
                 document.getElementById('rsvp-form-state').classList.add('hidden');
                 document.getElementById('rsvp-success-state').classList.remove('hidden');
-                document.getElementById('confirmed-msg').innerText = `Gracias por confirmar, ${data.nombre}. Te esperamos con tus ${data.pases} pases.`;
+                document.getElementById('confirmed-msg').innerText = `¡Gracias por confirmar, ${data.nombre}! Te esperamos con tus ${data.pases} pases.`;
             }
         }
 
@@ -490,17 +442,13 @@
             scrollHint.classList.remove('hidden');
             musicHint.classList.remove('hidden');
             audio.volume = 0.4;
-            audio.play().then(() => { 
-                isPlaying = true; 
-                audioBtn.classList.add('playing');
-                updateMusicHint();
-            }).catch(e => {});
+            audio.play().then(() => { isPlaying = true; audioBtn.classList.add('playing'); updateMusicHint(); }).catch(e => {});
             setTimeout(reveal, 1200);
         }
 
         function toggleMusic() {
-            if (isPlaying) { audio.pause(); audioBtn.classList.remove('playing'); musicIcon.classList.add('hidden'); muteIcon.classList.remove('hidden'); }
-            else { audio.play(); audioBtn.classList.add('playing'); musicIcon.classList.remove('hidden'); muteIcon.classList.add('hidden'); }
+            if (isPlaying) { audio.pause(); audioBtn.classList.remove('playing'); }
+            else { audio.play(); audioBtn.classList.add('playing'); }
             isPlaying = !isPlaying;
             updateMusicHint();
         }
@@ -515,20 +463,24 @@
             const cantidad = document.getElementById('guestCount').value;
             const btn = document.getElementById('btn-confirm');
             const msg = document.getElementById('saving-msg');
-            if (!nombre) { document.getElementById('guestName').style.border = "1px solid #b08d57"; return; }
+            if (!nombre) { document.getElementById('guestName').style.border = "1.5px solid #b08d57"; return; }
             try {
                 btn.disabled = true; btn.innerText = "GUARDANDO...";
                 if (window.saveRSVP) await window.saveRSVP({ nombre, pases: parseInt(cantidad) });
-                
-                // Guardar en memoria local
-                localStorage.setItem('confirmed_rsvp', JSON.stringify({ nombre, pases: cantidad }));
-
+                localStorage.setItem('confirmed_rsvp_daniel', JSON.stringify({ nombre, pases: cantidad }));
                 finalMessage = `🕊️ *Confirmación: Primera Comunión*\nInvitado: *${nombre}*\nPases: *${cantidad}*\n\n¡Ahí nos vemos!`;
                 document.getElementById('previewText').innerText = finalMessage.replace(/\*/g, '');
                 document.getElementById('step-form').classList.add('hidden');
                 document.getElementById('step-preview').classList.remove('hidden');
                 msg.innerText = "¡Confirmación guardada!";
             } catch (error) { btn.disabled = false; btn.innerText = "REINTENTAR"; }
+        }
+
+        function addToCalendar() {
+            const details = encodeURIComponent("Primera Comunión de Daniel Santiago Luévano Soto");
+            const location = encodeURIComponent("Parroquia de Nuestra Señora de los Dolores, Aguascalientes");
+            const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${details}&dates=20260606T130000Z/20260606T200000Z&details=Acompáñanos+a+celebrar+este+día+especial.&location=${location}&sf=true&output=xml`;
+            window.open(url, '_blank');
         }
 
         function sendToWhatsApp() { window.open(`https://wa.me/5214498040411?text=${encodeURIComponent(finalMessage)}`, '_blank'); }
@@ -554,17 +506,13 @@
             const postUI = document.getElementById('post-event-message');
 
             if (now > endOfDay) {
-                contUI.classList.add('hidden');
-                eventUI.classList.add('hidden');
-                postUI.classList.remove('hidden');
+                contUI.classList.add('hidden'); eventUI.classList.add('hidden'); postUI.classList.remove('hidden');
                 return;
             }
 
             const today = new Date();
             if (today.getDate() === 6 && today.getMonth() === 5 && today.getFullYear() === 2026) {
-                contUI.classList.add('hidden');
-                eventUI.classList.remove('hidden');
-                postUI.classList.add('hidden');
+                contUI.classList.add('hidden'); eventUI.classList.remove('hidden'); postUI.classList.add('hidden');
                 return;
             }
 
@@ -583,8 +531,12 @@
             if(musicHint) musicHint.style.opacity = '0';
         });
 
-        window.onload = checkExistingRSVP;
+        window.onload = () => {
+            checkURLGreeting();
+            checkExistingRSVP();
+        };
     </script>
 </body>
 </html>
+
 
