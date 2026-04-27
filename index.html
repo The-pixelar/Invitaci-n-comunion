@@ -324,7 +324,7 @@
                 </div>
             </div>
 
-            <!-- UBICACIONES REPARADAS -->
+            <!-- UBICACIONES -->
             <div class="w-full max-w-sm space-y-6 mb-16 reveal">
                 <!-- Ceremonia -->
                 <div class="card text-center">
@@ -370,12 +370,17 @@
 
             <!-- VESTIMENTA Y REGALOS -->
             <div class="w-full max-w-sm space-y-6 mb-16 reveal">
+                <!-- Icono de Vestimenta Mejorado -->
                 <div class="card text-center bg-white">
-                    <div class="flex justify-center mb-4 text-[#b08d57]">
-                        <svg class="w-16 h-16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.62 1.96V10a2 2 0 002 2h16a2 2 0 002-2V5.42a2 2 0 00-1.62-1.96z" />
-                            <path d="M12 2v10M12 5l-2-1M12 5l2-1" />
-                            <path d="M6 12l1 10h4l1-6 1 6h4l1-10" />
+                    <div class="flex justify-center mb-6 text-[#b08d57]">
+                        <svg class="w-16 h-16" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <!-- Vestido Elegante -->
+                            <path d="M18 16c2 0 4 2 4 4v6l-6 22h12l-2-22v-6c0-2 2-4 4-4" />
+                            <!-- Traje / Corbata -->
+                            <path d="M46 16l-4 4v8l4 18h8l-4-18v-8l-4-4z" />
+                            <path d="M46 16v6" />
+                            <path d="M43 20h6" />
+                            <path d="M14 48h36" opacity="0.3" stroke-dasharray="2 2" />
                         </svg>
                     </div>
                     <h4 class="font-serif-elegant text-[#b08d57] text-[12px] tracking-widest mb-2 uppercase">Código de Vestimenta</h4>
@@ -420,7 +425,7 @@
             </section>
 
             <!-- Pie de Página -->
-            <section class="professional-credits reveal text-center w-full pb-10">
+            <section class="reveal text-center w-full pb-10">
                 <div class="flex flex-col items-center gap-10">
                     <div class="footer-logo-item flex flex-col gap-3">
                         <p class="text-[9px] uppercase tracking-[0.4em] text-gray-400">Creative Design</p>
@@ -459,6 +464,13 @@
         let isPlaying = false;
         let finalMessage = "";
 
+        // Función para vibración sutil
+        function vibrate() {
+            if ("vibrate" in navigator) {
+                navigator.vibrate(15); // 15ms de vibración (muy sutil)
+            }
+        }
+
         function checkExistingRSVP() {
             const stored = localStorage.getItem('confirmed_rsvp_daniel');
             if (stored) {
@@ -469,21 +481,16 @@
             }
         }
 
-        // CONTROL DE BURBUJA UX POR TIEMPOS
         let hintInterval;
         function showMusicHintTimer() {
             if (hintInterval) clearInterval(hintInterval);
-            
-            // Aparece a los 5 segundos
             setTimeout(() => {
                 if (envelope.classList.contains('opened')) {
                     musicHint.classList.add('show');
-                    // Desaparece tras 4 segundos
                     setTimeout(() => musicHint.classList.remove('show'), 4000);
                 }
             }, 5000);
 
-            // Recordatorio cada 45 segundos
             hintInterval = setInterval(() => {
                 if (envelope.classList.contains('opened')) {
                     musicHint.classList.add('show');
@@ -493,18 +500,17 @@
         }
 
         function openInvitation() {
+            vibrate();
             envelope.classList.add('opened');
             audioBtn.classList.remove('hidden');
             if(scrollHint) scrollHint.classList.remove('hidden');
             
-            // Iniciar música automáticamente al abrir
             audio.volume = 0.4;
             audio.play().then(() => { 
                 isPlaying = true; 
                 audioBtn.classList.add('playing'); 
                 updateMusicHintText();
             }).catch(e => {
-                console.log("Auto-play prevenido por el navegador");
                 musicHint.classList.add('show');
             });
 
@@ -513,13 +519,12 @@
         }
 
         function toggleMusic() {
+            vibrate();
             if (isPlaying) audio.pause();
             else audio.play();
             isPlaying = !isPlaying;
             audioBtn.classList.toggle('playing', isPlaying);
             updateMusicHintText();
-            
-            // Si el usuario interactúa, ocultamos la burbuja inmediatamente
             musicHint.classList.remove('show');
         }
 
@@ -528,6 +533,7 @@
         }
 
         async function handleConfirm() {
+            vibrate();
             const nombre = document.getElementById('guestName').value.trim();
             const cantidad = document.getElementById('guestCount').value;
             const btn = document.getElementById('btn-confirm');
@@ -544,13 +550,14 @@
         }
 
         function addToCalendar() {
+            vibrate();
             const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=Comunión+Daniel+Santiago&dates=20260606T130000Z/20260606T200000Z&details=Acompáñanos+a+celebrar.&location=Parroquia+de+Nuestra+Señora+de+los+Dolores,+Aguascalientes&sf=true&output=xml`;
             window.open(url, '_blank');
         }
 
-        function sendToWhatsApp() { window.open(`https://wa.me/5214498040411?text=${encodeURIComponent(finalMessage)}`, '_blank'); }
-        function openFlayer() { document.getElementById('flayer-modal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeFlayer() { document.getElementById('flayer-modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
+        function sendToWhatsApp() { vibrate(); window.open(`https://wa.me/5214498040411?text=${encodeURIComponent(finalMessage)}`, '_blank'); }
+        function openFlayer() { vibrate(); document.getElementById('flayer-modal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeFlayer() { vibrate(); document.getElementById('flayer-modal').classList.remove('active'); document.body.style.overflow = 'auto'; }
 
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
@@ -560,10 +567,8 @@
             });
         }
 
-        // SCROLL HANDLING
         window.addEventListener("scroll", () => { 
             reveal(); 
-            // Ocultar icono de scroll al primer movimiento
             if (scrollHint && !scrollHint.classList.contains('hidden')) {
                 scrollHint.style.opacity = '0';
                 setTimeout(() => scrollHint.classList.add('hidden'), 800);
